@@ -1,0 +1,95 @@
+apiVersion: v1
+entries:
+  cluster-reader:
+  - annotations:
+      category: Authorization
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-12-19T17:00:19.882376522Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init cluster reader account
+    digest: 7060bbb54912954748c6ec03a257afe9416ad79c4194d9b0f60a6cadc03a8408
+    keywords:
+    - rbac
+    - cluster reader
+    name: cluster-reader
+    sources:
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    urls:
+    - https://github.com/veriks/charts/releases/download/cluster-reader-1.0.0/cluster-reader-1.0.0.tgz
+    version: 1.0.0
+  common:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 1.10.0
+    created: "2021-12-19T17:00:20.02478159Z"
+    description: A Library Helm Chart for grouping common logic between charts. This
+      chart is not deployable by itself.
+    digest: 4ed377ffdf327ffb4d44ad6a052a99487200177c28e0c365997451ce77e87203
+    keywords:
+    - common
+    - helper
+    - template
+    - function
+    name: common
+    sources:
+    - https://github.com/bitnami/charts
+    - https://www.bitnami.com/
+    type: library
+    urls:
+    - https://github.com/veriks/charts/releases/download/common-1.10.3/common-1.10.3.tgz
+    version: 1.10.3
+  namespace-reader:
+  - annotations:
+      category: Authorization
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-12-19T17:00:20.149952926Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init namespace reader account
+    digest: 767421f6197783e38e1d6d5baeec51bcd5d32f71510434177189c460eae8f2b7
+    keywords:
+    - rbac
+    - namespace reader
+    name: namespace-reader
+    sources:
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    urls:
+    - https://github.com/veriks/charts/releases/download/namespace-reader-1.0.0/namespace-reader-1.0.0.tgz
+    version: 1.0.0
+  prometheus-federation:
+  - annotations:
+      category: Monitoring
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-12-19T17:00:20.278156038Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure prometheus federation
+    digest: 149bc7ef3efbe67772d4f360fa4b77beaa8c2073eb0c89c393455b2fd7edd32c
+    keywords:
+    - prometheus
+    - federation
+    - authorization
+    name: prometheus-federation
+    sources:
+    - https://prometheus.io/docs/prometheus/latest/federation
+    urls:
+    - https://github.com/veriks/charts/releases/download/prometheus-federation-1.0.0/prometheus-federation-1.0.0.tgz
+    version: 1.0.0
+generated: "2021-12-19T17:00:20.278165038Z"
