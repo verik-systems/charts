@@ -1,0 +1,18 @@
+annotations:
+  category: Monitoring
+apiVersion: v2
+appVersion: 1.0.0
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 1.x.x
+description: Chart for configure prometheus federation
+keywords:
+  - prometheus
+  - federation
+  - authorization
+name: prometheus-federation
+sources: ['https://prometheus.io/docs/prometheus/latest/federation']
+version: 1.0.0
