@@ -1,0 +1,16 @@
+commonLabels:
+  app: namespace-reader
+  app.kubernetes.io/name: namespace-reader
+  app.kubernetes.io/component: namespace-reader
+
+serviceAccount:
+  name: namespace-reader
+  
+role:
+  rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/portforward"]
+    verbs: ["create"]
