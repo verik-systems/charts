@@ -1,15 +1,13 @@
 name: Lint and Test Charts
 
-on: 
-  pull_request:
-  push:
-    branches:
-      - main
+on: pull_request
 
 jobs:
   lint-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch history
+        run: git fetch --all
       - name: Checkout
         uses: actions/checkout@v2
         with:
