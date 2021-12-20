@@ -1,5 +1,6 @@
 # VEriK Helm Charts
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/verik-charts)](https://artifacthub.io/packages/search?repo=verik-charts)
+[![Release Charts](https://github.com/veriks/charts/actions/workflows/release.yml/badge.svg)](https://github.com/veriks/charts/actions/workflows/release.yml)
 ## Usage
 
 [Helm](https://helm.sh) must be installed to use the charts.  Please refer to
