@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-info
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  namespace: {{ .Release.Namespace }}
+data:
+    {{- if .Values.configMap.clusterInfo }}
+    {{toYaml .Values.configMap.clusterInfo | nindent 4 }}
+    {{- end }}

@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{toYaml .Values.labels | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- if .Values.labels }}
+        {{toYaml .Values.labels | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- if .Values.daemonSet.annotations }}
+        {{toYaml .Values.daemonSet.annotations | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: fluentd
+      terminationGracePeriodSeconds: 30
+      # Because the image's entrypoint requires to write on /fluentd/etc but we mount configmap there which is read-only,
+      # this initContainers workaround or other is needed.
+      # See https://github.com/fluent/fluentd-kubernetes-daemonset/issues/90
+      initContainers:
+        - name: copy-fluentd-config
+          image: busybox
+          command: ['sh', '-c', 'cp /config-volume/..data/* /fluentd/etc']
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config-volume
+            - name: fluentdconf
+              mountPath: /fluentd/etc
+        - name: update-log-driver
+          image: busybox
+          command: ['sh','-c','']
+      containers:
+        - name: {{ .Values.labels.app }}
+          image: fluent/fluentd-kubernetes-daemonset:v1.7.3-debian-cloudwatch-1.0
+          env:
+            - name: REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: cluster-info
+                  key: logs.region
+            - name: CLUSTER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cluster-info
+                  key: cluster.name
+            - name: CI_VERSION
+              value: "k8s/1.2.2"
+          resources:
+            {{- if .Values.resources }}
+            {{toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config-volume
+            - name: fluentdconf
+              mountPath: /fluentd/etc
+            - name: varlog
+              mountPath: /var/log
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: runlogjournal
+              mountPath: /run/log/journal
+              readOnly: true
+            - name: dmesg
+              mountPath: /var/log/dmesg
+              readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ template "common.names.fullname" . }}-configmap
+        - name: fluentdconf
+          emptyDir: {}
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: runlogjournal
+          hostPath:
+            path: /run/log/journal
+        - name: dmesg
+          hostPath:
+            path: /var/log/dmesg
