@@ -1,0 +1,18 @@
+annotations:
+  category: Application
+apiVersion: v2
+appVersion: 1.0.0
+dependencies:
+  - name: common
+    repository: file://../common
+    tags:
+      - common
+    version: 1.x.x
+description: Chart to init VEriK services
+keywords:
+  - VEriK
+  - Application
+  - Services
+name: verik-service
+sources: ['https://veriksystems.com']
+version: 1.0.0
