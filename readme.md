@@ -1,5 +1,10 @@
 # VEriK Helm Charts
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/verik-charts)](https://artifacthub.io/packages/search?repo=verik-charts)
+[![Release Charts](https://github.com/veriks/charts/actions/workflows/release.yml/badge.svg)](https://github.com/veriks/charts/actions/workflows/release.yml)
+[![Labeler](https://github.com/veriks/charts/actions/workflows/labeler.yml/badge.svg)](https://github.com/veriks/charts/actions/workflows/labeler.yml)
+[![Lint and Test Charts](https://github.com/veriks/charts/actions/workflows/lint-test.yml/badge.svg)](https://github.com/veriks/charts/actions/workflows/lint-test.yml)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 ## Usage
 
 [Helm](https://helm.sh) must be installed to use the charts.  Please refer to
