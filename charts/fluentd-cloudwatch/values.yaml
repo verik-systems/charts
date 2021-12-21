@@ -30,8 +30,8 @@ resources:
 
 configMap:
   clusterInfo: 
-    cluster.name:  {{ .Values.clusterName }}
-    logs.region:   {{ .Values.logsRegion }}
+    cluster.name:  # <please input cluster name>
+    logs.region:   # <please input logs region>
   data:
     fluentConfig: |
       @include containers.conf
