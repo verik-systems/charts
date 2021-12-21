@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "common.names.name" . }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+      {{- if .Values.commonLabels }}
+      {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.labels }}
+      {{- include "common.tplvalues.render" ( dict "value" .Values.labels "context" $ ) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
+      {{- end }}
+    spec:
+      replicas: {{ .Values.replicas }}
+      {{- if .Values.image.credentials }}
+      imagePullSecrets: 
+      - name: {{ .Values.image.secretName | quote }}
+      {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
+      {{- end }}
+      serviceAccountName: {{ template "common.names.name" . }}
+      {{- if .Values.affinity }}
+      affinity: {{- include "common.tplvalues.render" (dict "value" .Values.affinity "context" $) | nindent 8 }}
+      {{- else }}
+      affinity:
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.podAffinityPreset "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.podAntiAffinityPreset "context" $) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.nodeAffinityPreset.type "key" .Values.nodeAffinityPreset.key "values" .Values.nodeAffinityPreset.values) | nindent 10 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.hostNetwork }}
+      hostNetwork: true
+      {{- end }}
+      containers:
+        - name:  {{ template "common.names.name" . }} 
+          image: {{ template "application.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          args:
+          {{- range $key, $value := .Values.extraArgs }}
+          {{- if $value }}
+          - --{{ $key }}={{ $value }}
+          {{- else }}
+          - --{{ $key }}
+          {{- end }}
+          {{- end }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{toYaml .Values.extraEnvVars  | nindent 12 }}
+            {{- end }}
+          ports:
+            - name: http-port
+              protocol: TCP
+              containerPort: {{ .Values.containerPort }}
+# the application will have a maximum of 3 minutes (30 * 6 = 180s) to finish its startup. 
+# Once the startup probe has succeeded once, the liveness probe takes over to provide 
+# a fast response to container deadlocks. If the startup probe never succeeds, 
+# the container is killed after 180s and subject to the pod's restartPolicy.
+          startupProbe:
+            httpGet:
+              path: {{ .Values.healthz.startupProbe }}
+              port: http-port
+            failureThreshold: 30
+            periodSeconds: 6
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthz.livenessProbe }}
+              port: http-port 
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthz.readinessProbe }}
+              port: http-port  
+            initialDelaySeconds: 3
+            failureThreshold: 3
+            periodSeconds: 10
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          {{- if .Values.resources }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+          {{- if .Values.extraVolumeMounts }}
+          volumeMounts: {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+      {{- if .Values.extraVolumes }}
+      volumes: {{- toYaml .Values.extraVolumes | nindent 8 }}
+      {{- end }}

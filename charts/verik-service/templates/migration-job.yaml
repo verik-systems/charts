@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "common.names.name" . }}-job
+  namespace: {{ .Values.namespace }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-upgrade, pre-install
+    # "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{ template "common.names.name" . }}-migration
+          image: {{ template "application.image" . }}
+          command: ["/bin/sh","-c"]
+          {{- if .Values.migrate }}
+          args: {{ .Values.migrationArgs }}
+          {{- else }}
+          args: ['echo "This migration job has been skipped!"']
+          {{- end }}
+          env:
+            {{- if .Values.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+      restartPolicy: Never
+  backoffLimit: 1
