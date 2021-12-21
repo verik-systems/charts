@@ -1,0 +1,31 @@
+annotations:
+  category: %%CHOOSE_ONE_FROM_CHART_CATEGORIES_FILE%%
+apiVersion: v2
+appVersion: %%UPSTREAM_PROJECT_VERSION%%
+dependencies:
+  - condition: SUBCHART_NAME.enabled
+    name: SUBCHART_NAME
+    repository: https://charts.verik.com/verik
+    version: %%MAJOR_SUBCHART_VERSION_(A.X.X)%%
+  - name: common
+    repository: https://charts.verik.com/verik
+    tags:
+      - verik-common
+    version: 1.x.x
+description: %%DESCRIPTION%%
+engine: gotpl
+home: %%UPSTREAM_PROJECT_URL%%
+icon: https://verik.com/assets/stacks/%%IMAGE_NAME%%/img/%%IMAGE_NAME%%-stack-110x117.png
+keywords:
+  - %%UPSTREAM_PROJECT_KEYWORD%%
+  - %%UPSTREAM_PROJECT_KEYWORD%%
+  - ...
+maintainers:
+  - email: containers@verik.com
+    name: verik
+name: %%CHART_NAME%%
+sources:
+  - https://github.com/verik/verik-docker-%%IMAGE_NAME%%
+  - %%UPSTREAM_PROJECT_SOURCE_CODE_URL%%
+  - ...
+version: 0.1.0
