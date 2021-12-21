@@ -45,6 +45,30 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/common-1.10.3/common-1.10.3.tgz
     version: 1.10.3
+  fluentd-cloudwatch:
+  - annotations:
+      category: Logging
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-12-21T04:45:07.962402797Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure send logs to CloudWatch Logs
+    digest: bbccdff3b8fa275124bed3838220d73d81a5d0c7e2a8c05e30813c30e23a37b9
+    keywords:
+    - CloudWatch
+    - logging
+    - fluentd
+    name: fluentd-cloudwatch
+    sources:
+    - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html
+    urls:
+    - https://github.com/veriks/charts/releases/download/fluentd-cloudwatch-1.0.0/fluentd-cloudwatch-1.0.0.tgz
+    version: 1.0.0
   namespace-reader:
   - annotations:
       category: Authorization
@@ -92,4 +116,4 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/prometheus-federation-1.0.0/prometheus-federation-1.0.0.tgz
     version: 1.0.0
-generated: "2021-12-19T17:00:20.278165038Z"
+generated: "2021-12-21T04:45:07.9624106Z"
