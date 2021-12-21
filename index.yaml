@@ -116,4 +116,28 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/prometheus-federation-1.0.0/prometheus-federation-1.0.0.tgz
     version: 1.0.0
-generated: "2021-12-21T04:45:07.9624106Z"
+  verik-service:
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-12-21T11:12:44.526612371Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init VEriK services
+    digest: b539bcddadfa6b00d4099879d748e5703c577b0a86915789aaeeb52522f53445
+    keywords:
+    - VEriK
+    - Application
+    - Services
+    name: verik-service
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/veriks/charts/releases/download/verik-service-1.0.0/verik-service-1.0.0.tgz
+    version: 1.0.0
+generated: "2021-12-21T11:12:44.526620171Z"
