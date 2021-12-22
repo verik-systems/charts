@@ -52,8 +52,29 @@ replicas: 1
 ## @param automountServiceAccountToken auto mount service account token
 automountServiceAccountToken: false
 
-## @param extraEnvVars Extra environments
-extraEnvVars: [] # <please update>
+extraEnvVars:  # <please update>
+    # find the redis service in the cluster
+    ## @param extraEnvVars[0].name Redis uri to connect
+    ## @param extraEnvVars[0].value Redis uri to connect
+    ## @param extraEnvVars[1].name prefix for queues
+    ## @param extraEnvVars[1].value prefix for queues
+    ## @param extraEnvVars[2].name prefix for exported metrics
+    ## @param extraEnvVars[2].value prefix for exported metrics
+    ## @param extraEnvVars[3].name a space separated list of queues to check
+    ## @param extraEnvVars[3].value a space separated list of queues to check
+    ## @param extraEnvVars[4].name set to '0' or 'false' to disable queue discovery
+    ## @param extraEnvVars[4].value set to '0' or 'false' to disable queue discovery
+  - name: EXPORTER_REDIS_URL
+    value: redis://redis:6379/0
+  - name: EXPORTER_PREFIX
+    value: bull
+  - name: EXPORTER_STAT_PREFIX
+    value: bull_queue_
+    # space delimited list of queues
+  - name: EXPORTER_QUEUES
+    value: "mail job_one video audio"
+  - name: EXPORTER_AUTODISCOVER
+    value: ""
 ## @param migrationArgs command arg for migration script
 migrationArgs: ["./migration"]
 
@@ -154,29 +175,8 @@ extraVolumes:
   - name: tmp
     emptyDir: {}
 
-extraArgs: 
-    # find the redis service in the cluster
-    ## @param extraArgs[0].name Redis uri to connect
-    ## @param extraArgs[0].value Redis uri to connect
-    ## @param extraArgs[1].name prefix for queues
-    ## @param extraArgs[1].value prefix for queues
-    ## @param extraArgs[2].name prefix for exported metrics
-    ## @param extraArgs[2].value prefix for exported metrics
-    ## @param extraArgs[3].name a space separated list of queues to check
-    ## @param extraArgs[3].value a space separated list of queues to check
-    ## @param extraArgs[4].name set to '0' or 'false' to disable queue discovery
-    ## @param extraArgs[4].value set to '0' or 'false' to disable queue discovery
-  - name: EXPORTER_REDIS_URL
-    value: redis://redis:6379/0
-  - name: EXPORTER_PREFIX
-    value: bull
-  - name: EXPORTER_STAT_PREFIX
-    value: bull_queue_
-    # space delimited list of queues
-  - name: EXPORTER_QUEUES
-    value: "mail job_one video audio"
-  - name: EXPORTER_AUTODISCOVER
-    value: ""
+## @param extraArgs additional arguments
+extraArgs: []
 
 ##
 ## @section Service configuration Parameters

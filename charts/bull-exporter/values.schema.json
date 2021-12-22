@@ -69,8 +69,20 @@
         },
         "extraEnvVars": {
             "type": "array",
-            "description": "Extra environments",
-            "default": []
+            "description": "Redis uri to connect",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "set to '0' or 'false' to disable queue discovery"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "set to '0' or 'false' to disable queue discovery"
+                    }
+                }
+            }
         },
         "migrationArgs": {
             "type": "array",
@@ -190,20 +202,8 @@
         },
         "extraArgs": {
             "type": "array",
-            "description": "Redis uri to connect",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "set to '0' or 'false' to disable queue discovery"
-                    },
-                    "value": {
-                        "type": "string",
-                        "description": "set to '0' or 'false' to disable queue discovery"
-                    }
-                }
-            }
+            "description": "additional arguments",
+            "default": []
         },
         "containerPort": {
             "type": "number",

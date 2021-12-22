@@ -1,7 +1,7 @@
 annotations:
   category: Application
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: 1.0.1
 dependencies:
   - name: common
     repository: file://../common
@@ -17,4 +17,4 @@ keywords:
   - exporter
 name: bull-exporter
 sources: ['https://github.com/UpHabit/bull_exporter']
-version: 1.0.1
+version: 1.0.2

@@ -55,17 +55,26 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Common Parameters
 
-| Name                           | Description                                 | Value                     |
-| ------------------------------ | ------------------------------------------- | ------------------------- |
-| `image.pullPolicy`             | pull image policy                           | `IfNotPresent`            |
-| `image.registry`               | image registry                              | `registry.hub.docker.com` |
-| `image.repository`             | image repository                            | `verik01/bull-exporter`   |
-| `image.tag`                    | image tag                                   | `v0.1.0`                  |
-| `replicas`                     | Number of Metrics Server replicas to deploy | `1`                       |
-| `automountServiceAccountToken` | auto mount service account token            | `false`                   |
-| `extraEnvVars`                 | Extra environments                          | `[]`                      |
-| `migrationArgs`                | command arg for migration script            | `["./migration"]`         |
-| `configurations`               | configmap configuration data                | `[]`                      |
+| Name                           | Description                                      | Value                      |
+| ------------------------------ | ------------------------------------------------ | -------------------------- |
+| `image.pullPolicy`             | pull image policy                                | `IfNotPresent`             |
+| `image.registry`               | image registry                                   | `registry.hub.docker.com`  |
+| `image.repository`             | image repository                                 | `verik01/bull-exporter`    |
+| `image.tag`                    | image tag                                        | `v0.1.0`                   |
+| `replicas`                     | Number of Metrics Server replicas to deploy      | `1`                        |
+| `automountServiceAccountToken` | auto mount service account token                 | `false`                    |
+| `extraEnvVars[0].name`         | Redis uri to connect                             | `EXPORTER_REDIS_URL`       |
+| `extraEnvVars[0].value`        | Redis uri to connect                             | `redis://redis:6379/0`     |
+| `extraEnvVars[1].name`         | prefix for queues                                | `EXPORTER_PREFIX`          |
+| `extraEnvVars[1].value`        | prefix for queues                                | `bull`                     |
+| `extraEnvVars[2].name`         | prefix for exported metrics                      | `EXPORTER_STAT_PREFIX`     |
+| `extraEnvVars[2].value`        | prefix for exported metrics                      | `bull_queue_`              |
+| `extraEnvVars[3].name`         | a space separated list of queues to check        | `EXPORTER_QUEUES`          |
+| `extraEnvVars[3].value`        | a space separated list of queues to check        | `mail job_one video audio` |
+| `extraEnvVars[4].name`         | set to '0' or 'false' to disable queue discovery | `EXPORTER_AUTODISCOVER`    |
+| `extraEnvVars[4].value`        | set to '0' or 'false' to disable queue discovery | `""`                       |
+| `migrationArgs`                | command arg for migration script                 | `["./migration"]`          |
+| `configurations`               | configmap configuration data                     | `[]`                       |
 
 
 ### Pod configuration Parameters
@@ -95,22 +104,13 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Storage configuration Parameters
 
-| Name                             | Description                                      | Value                      |
-| -------------------------------- | ------------------------------------------------ | -------------------------- |
-| `extraVolumeMounts[0].name`      | extra volume mounts name                         | `tmp`                      |
-| `extraVolumeMounts[0].mountPath` | extra volume mounts path                         | `/tmp`                     |
-| `extraVolumes[0].name`           | extra volume name                                | `tmp`                      |
-| `extraVolumes[0].emptyDir`       | extra volume emptyDir definition                 | `{}`                       |
-| `extraArgs[0].name`              | Redis uri to connect                             | `EXPORTER_REDIS_URL`       |
-| `extraArgs[0].value`             | Redis uri to connect                             | `redis://redis:6379/0`     |
-| `extraArgs[1].name`              | prefix for queues                                | `EXPORTER_PREFIX`          |
-| `extraArgs[1].value`             | prefix for queues                                | `bull`                     |
-| `extraArgs[2].name`              | prefix for exported metrics                      | `EXPORTER_STAT_PREFIX`     |
-| `extraArgs[2].value`             | prefix for exported metrics                      | `bull_queue_`              |
-| `extraArgs[3].name`              | a space separated list of queues to check        | `EXPORTER_QUEUES`          |
-| `extraArgs[3].value`             | a space separated list of queues to check        | `mail job_one video audio` |
-| `extraArgs[4].name`              | set to '0' or 'false' to disable queue discovery | `EXPORTER_AUTODISCOVER`    |
-| `extraArgs[4].value`             | set to '0' or 'false' to disable queue discovery | `""`                       |
+| Name                             | Description                      | Value  |
+| -------------------------------- | -------------------------------- | ------ |
+| `extraVolumeMounts[0].name`      | extra volume mounts name         | `tmp`  |
+| `extraVolumeMounts[0].mountPath` | extra volume mounts path         | `/tmp` |
+| `extraVolumes[0].name`           | extra volume name                | `tmp`  |
+| `extraVolumes[0].emptyDir`       | extra volume emptyDir definition | `{}`   |
+| `extraArgs`                      | additional arguments             | `[]`   |
 
 
 ### Service configuration Parameters
