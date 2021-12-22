@@ -27,6 +27,7 @@ spec:
       annotations: {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
       {{- end }}
     spec:
+      automountServiceAccountToken:  {{ .Values.automountServiceAccountToken }}
       {{- if .Values.image.credentials }}
       imagePullSecrets: 
       - name: {{ .Values.image.secretName | quote }}
@@ -81,7 +82,7 @@ spec:
               path: {{ .Values.healthz.startupProbe }}
               port: http-port
             failureThreshold: 30
-            periodSeconds: 6
+            periodSeconds: 15
           livenessProbe:
             httpGet:
               path: {{ .Values.healthz.livenessProbe }}
@@ -97,9 +98,12 @@ spec:
             failureThreshold: 3
             periodSeconds: 10
           securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 1000
+            capabilities:
+              drop:
+                - all
           {{- if .Values.resources }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           {{- end }}

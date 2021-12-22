@@ -1,0 +1,405 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "commonLabels": {
+            "type": "object",
+            "properties": {
+                "app": {
+                    "type": "string",
+                    "description": "common app label",
+                    "default": "bull-exporter"
+                }
+            }
+        },
+        "labels": {
+            "type": "object",
+            "properties": {
+                "app": {
+                    "type": "string",
+                    "description": "Extra Labels to add to all deployed objects app",
+                    "default": "bull"
+                },
+                "role": {
+                    "type": "string",
+                    "description": "Extra Labels to add to all deployed objects role",
+                    "default": "exporter"
+                }
+            }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override common.names.fullname",
+            "default": ""
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "pull image policy",
+                    "default": "IfNotPresent"
+                },
+                "registry": {
+                    "type": "string",
+                    "description": "image registry",
+                    "default": "registry.hub.docker.com"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "image repository",
+                    "default": "verik01/bull-exporter"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "image tag",
+                    "default": "v0.1.0"
+                }
+            }
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of Metrics Server replicas to deploy",
+            "default": 1
+        },
+        "automountServiceAccountToken": {
+            "type": "boolean",
+            "description": "auto mount service account token",
+            "default": false
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Extra environments",
+            "default": []
+        },
+        "migrationArgs": {
+            "type": "array",
+            "description": "command arg for migration script",
+            "default": [
+                "./migration"
+            ]
+        },
+        "configurations": {
+            "type": "array",
+            "description": "configmap configuration data",
+            "default": []
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Additional pod annotations for MariaDB Galera pods",
+            "default": {}
+        },
+        "priorityClassName": {
+            "type": "string",
+            "description": "Priority class for pod scheduling",
+            "default": "system-cluster-critical"
+        },
+        "podAffinityPreset": {
+            "type": "string",
+            "description": "Pod affinity preset",
+            "default": ""
+        },
+        "podAntiAffinityPreset": {
+            "type": "string",
+            "description": "Pod anti-affinity preset",
+            "default": "soft"
+        },
+        "podDisruptionBudget": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Pod disruption budget enabled",
+                    "default": false
+                },
+                "minAvailable": {
+                    "type": "number",
+                    "description": "Pod disruption budget min available pod",
+                    "default": 1
+                },
+                "maxUnavailable": {
+                    "type": "number",
+                    "description": "Pod disruption budget max unavailable pod",
+                    "default": 3
+                }
+            }
+        },
+        "nodeAffinityPreset": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Node affinity preset type",
+                    "default": ""
+                },
+                "key": {
+                    "type": "string",
+                    "description": "Node affinity preset key",
+                    "default": ""
+                },
+                "values": {
+                    "type": "array",
+                    "description": "Node affinity preset values",
+                    "default": []
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment. Evaluated as a template.",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment. Evaluated as a template.",
+            "default": []
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "extra volume mounts name",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "extra volume mounts name"
+                    },
+                    "mountPath": {
+                        "type": "string",
+                        "description": "extra volume mounts path"
+                    }
+                }
+            }
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "extra volume name",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "extra volume name"
+                    },
+                    "emptyDir": {
+                        "type": "object",
+                        "description": "extra volume emptyDir definition"
+                    }
+                }
+            }
+        },
+        "extraArgs": {
+            "type": "array",
+            "description": "Redis uri to connect",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "set to '0' or 'false' to disable queue discovery"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "set to '0' or 'false' to disable queue discovery"
+                    }
+                }
+            }
+        },
+        "containerPort": {
+            "type": "number",
+            "description": "Container port",
+            "default": 5959
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Kubernetes service type",
+                    "default": "ClusterIP"
+                },
+                "labels": {
+                    "type": "object",
+                    "description": "Kubernetes service labels",
+                    "default": {}
+                },
+                "ports": {
+                    "type": "array",
+                    "description": "Kubernetes service for http port",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "Kubernetes service for http port"
+                            },
+                            "port": {
+                                "type": "number",
+                                "description": "Kubernetes service port"
+                            },
+                            "targetPort": {
+                                "type": "number",
+                                "description": "Kubernetes service target container port"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Kubernetes ingress enabled",
+                    "default": false
+                },
+                "labels": {
+                    "type": "object",
+                    "description": "Kubernetes ingress labels",
+                    "default": {}
+                },
+                "port": {
+                    "type": "number",
+                    "description": "Kubernetes ingress port",
+                    "default": 80
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Kubernetes ingress path",
+                    "default": "/"
+                },
+                "pathType": {
+                    "type": "string",
+                    "description": "Kubernetes ingress pathType",
+                    "default": "Prefix"
+                },
+                "tls": {
+                    "type": "array",
+                    "description": "Kubernetes ingress tls",
+                    "default": []
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Kubernetes resources limit cpu configure",
+                            "default": "200m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Kubernetes resources limit memory configure",
+                            "default": "512Mi"
+                        }
+                    }
+                },
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Kubernetes resources requests cpu configure",
+                            "default": "100m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Kubernetes resources requests memory configure",
+                            "default": "128Mi"
+                        }
+                    }
+                }
+            }
+        },
+        "metrics": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable the export of Prometheus metrics",
+                    "default": false
+                },
+                "serviceMonitor": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)",
+                            "default": true
+                        },
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which Prometheus is running",
+                            "default": ""
+                        },
+                        "interval": {
+                            "type": "string",
+                            "description": "Interval at which metrics should be scraped.",
+                            "default": ""
+                        },
+                        "scrapeTimeout": {
+                            "type": "string",
+                            "description": "Timeout after which the scrape is ended",
+                            "default": ""
+                        },
+                        "selector": {
+                            "type": "object",
+                            "description": "Prometheus instance selector labels",
+                            "default": {}
+                        },
+                        "metricRelabelings": {
+                            "type": "array",
+                            "description": "Specify Metric Relabellings to add to the scrape endpoint",
+                            "default": []
+                        },
+                        "honorLabels": {
+                            "type": "boolean",
+                            "description": "Labels to honor to add to the scrape endpoint",
+                            "default": false
+                        },
+                        "additionalLabels": {
+                            "type": "object",
+                            "description": "Additional custom labels for the ServiceMonitor",
+                            "default": {}
+                        },
+                        "jobLabel": {
+                            "type": "string",
+                            "description": "The name of the label on the target service to use as the job name in prometheus.",
+                            "default": ""
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "service monitor port mapping with Kubernetes service endpoint port",
+                            "default": "metrics"
+                        }
+                    }
+                }
+            }
+        },
+        "healthz": {
+            "type": "object",
+            "properties": {
+                "startupProbe": {
+                    "type": "string",
+                    "description": "Kubernetes container startupProbe",
+                    "default": "/liveness"
+                },
+                "livenessProbe": {
+                    "type": "string",
+                    "description": "Kubernetes container livenessProbe",
+                    "default": "/liveness"
+                },
+                "readinessProbe": {
+                    "type": "string",
+                    "description": "Kubernetes container readinessProbe",
+                    "default": "/healthz"
+                }
+            }
+        }
+    }
+}
