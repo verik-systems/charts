@@ -1,0 +1,351 @@
+
+## @section Global Parameters
+## Global Docker image parameters
+## Please, note that this will override the image parameters, including dependencies, configured to use the global value
+## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+
+## @param commonLabels.app common app label
+## @param commonLabels.app.kubernetes.io/name common Kubernetes app label
+## @param commonLabels.app.kubernetes.io/component common Kubernetes app component
+commonLabels:
+  app: bull-exporter 
+  app.kubernetes.io/name: bull-exporter 
+  app.kubernetes.io/component: bull-exporter 
+
+## @param labels.app Extra Labels to add to all deployed objects app
+## @param labels.role Extra Labels to add to all deployed objects role
+labels: 
+    app: bull
+    role: exporter
+
+## @param nameOverride String to partially override common.names.fullname
+nameOverride: "" 
+##
+## @section Common Parameters
+##
+
+## @param image.pullPolicy pull image policy
+## @param image.registry image registry
+## @param image.repository image repository
+## @param image.tag image tag
+image:
+  pullPolicy: IfNotPresent
+  registry: "registry.hub.docker.com" 
+  repository: "verik01/bull-exporter" 
+  tag: "v0.1.0" 
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+
+  # secretName: 
+  # credentials: 
+  #   # image.registry is the Docker registry
+  #   - registry: 
+  #     # image.username is the Docker user's username
+  #     username: 
+  #     # image.accessToken is the Docker user's access token (recommened) or password
+  #     accessToken: 
+
+## @param replicas Number of Metrics Server replicas to deploy
+replicas: 1
+
+## @param automountServiceAccountToken auto mount service account token
+automountServiceAccountToken: false
+
+## @param extraEnvVars Extra environments
+extraEnvVars: [] # <please update>
+## @param migrationArgs command arg for migration script
+migrationArgs: ["./migration"]
+
+## @param configurations configmap configuration data
+configurations: []
+
+##
+## @section Pod configuration Parameters
+##
+
+## @param podAnnotations Additional pod annotations for MariaDB Galera pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
+podAnnotations: {}
+
+## @param priorityClassName Priority class for pod scheduling
+## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: system-cluster-critical
+
+## @param podAffinityPreset Pod affinity preset
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+## Allowed values: soft, hard
+##
+podAffinityPreset: ""
+
+## @param podAntiAffinityPreset Pod anti-affinity preset
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+## Allowed values: soft, hard
+##
+podAntiAffinityPreset: soft
+
+## @param podDisruptionBudget.enabled Pod disruption budget enabled
+## @param podDisruptionBudget.minAvailable Pod disruption budget min available pod
+## @param podDisruptionBudget.maxUnavailable Pod disruption budget max unavailable pod
+# https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+  maxUnavailable: 3
+
+
+##
+## @section Node configuration Parameters
+##
+
+## @param nodeAffinityPreset.type Node affinity preset type
+## @param nodeAffinityPreset.key Node affinity preset key
+## @param nodeAffinityPreset.values Node affinity preset values
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+## Allowed values: soft, hard
+##
+nodeAffinityPreset:
+  ## Node affinity type
+  ## Allowed values: soft, hard
+  type: ""
+  ## Node label key to match
+  ## E.g.
+  ## key: "kubernetes.io/e2e-az-name"
+  ##
+  key: ""
+  ## Node label values to match
+  ## E.g.
+  ## values:
+  ##   - e2e-az1
+  ##   - e2e-az2
+  ##
+  values: []
+
+## @param affinity Affinity for pod assignment. Evaluated as a template.
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+##
+affinity: {}
+
+## @param nodeSelector.alpha.eksctl.io/nodegroup-name node group name for node selector
+## ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: 
+  alpha.eksctl.io/nodegroup-name: "" # <please update>
+
+## @param tolerations Tolerations for pod assignment. Evaluated as a template.
+## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+##
+tolerations: []
+
+##
+## @section Storage configuration Parameters
+##
+
+## @param extraVolumeMounts[0].name extra volume mounts name
+## @param extraVolumeMounts[0].mountPath extra volume mounts path
+extraVolumeMounts:
+  - name: tmp
+    mountPath: /tmp
+## @param extraVolumes[0].name extra volume name
+## @param extraVolumes[0].emptyDir extra volume emptyDir definition
+extraVolumes:
+  - name: tmp
+    emptyDir: {}
+
+extraArgs: 
+    # find the redis service in the cluster
+    ## @param extraArgs[0].name Redis uri to connect
+    ## @param extraArgs[0].value Redis uri to connect
+    ## @param extraArgs[1].name prefix for queues
+    ## @param extraArgs[1].value prefix for queues
+    ## @param extraArgs[2].name prefix for exported metrics
+    ## @param extraArgs[2].value prefix for exported metrics
+    ## @param extraArgs[3].name a space separated list of queues to check
+    ## @param extraArgs[3].value a space separated list of queues to check
+    ## @param extraArgs[4].name set to '0' or 'false' to disable queue discovery
+    ## @param extraArgs[4].value set to '0' or 'false' to disable queue discovery
+  - name: EXPORTER_REDIS_URL
+    value: redis://redis:6379/0
+  - name: EXPORTER_PREFIX
+    value: bull
+  - name: EXPORTER_STAT_PREFIX
+    value: bull_queue_
+    # space delimited list of queues
+  - name: EXPORTER_QUEUES
+    value: "mail job_one video audio"
+  - name: EXPORTER_AUTODISCOVER
+    value: ""
+
+##
+## @section Service configuration Parameters
+##
+
+## @param containerPort Container port
+containerPort: 5959
+
+## @param service.type Kubernetes service type
+## @param service.labels Kubernetes service labels
+## @param service.ports[0].name Kubernetes service for http port
+## @param service.ports[0].port Kubernetes service port
+## @param service.ports[0].targetPort Kubernetes service target container port
+##
+service:
+  ## Kubernetes service type and port number
+  ##
+  type: ClusterIP
+  ports: 
+    - name: http-port
+      port: 5959
+      targetPort: 5959
+  ## @param service.annotations.prometheus.io/scrape is scrape
+  ## @param service.annotations.prometheus.io/port service port
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '5959'
+  #   service.beta.kubernetes.io/aws-load-balancer-type: nlb
+  #   # Note that the backend talks over HTTP.
+  #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+  #   # TODO: Fill in with the ARN of your certificate.
+  #   # veriksystems.com, *.veriksystems.com
+  #   service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-southeast-2:383400109659:certificate/11eda06a-f23d-4465-a037-bfff5c2ff123
+  #   # Only run SSL on the port named "https" below.
+  #   service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+
+  ## Provide any additional labels which may be required. This can be used to
+  ## have metrics-server show up in `kubectl cluster-info`
+  ##  kubernetes.io/cluster-service: "true"
+  ##  kubernetes.io/name: "Metrics-server"
+  labels: {}
+
+##
+## @section Ingress configuration Parameters
+##
+
+## @param ingress.enabled Kubernetes ingress enabled
+## @param ingress.annotations.kubernetes.io/ingress.class Kubernetes ingress annotations kubernetes.io/ingress.class nginx
+## @param ingress.labels Kubernetes ingress labels
+## @param ingress.port Kubernetes ingress port
+## @param ingress.path Kubernetes ingress path
+## @param ingress.pathType Kubernetes ingress pathType
+## @param ingress.tls Kubernetes ingress tls
+ingress:
+  ## If true, VEriK Service Ingress will be created
+  ##
+  enabled: false
+
+  ## Annotations for VEriK Service Ingress
+  ##
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+
+  ## Labels to be added to the Ingress
+  ##
+  labels: {}
+
+  port: 80
+
+  ## Hostnames.
+  ## Must be provided if Ingress is enable.
+  ##
+  # hosts:
+  #   - app.veriksystems.com
+
+  ## Path for VEriK Service ingress
+  path: /
+  pathType: Prefix
+
+  ## TLS configuration for VEriK Service Ingress
+  ## Secret must be manually created in the namespace
+  ##
+  tls: []
+  # - secretName: general-tls
+  #   hosts:
+  #   - app.example.com
+
+##
+## @section Resource quota configuraiton Parameters
+##
+
+## Metric Server containers' resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+## @param resources.limits.cpu Kubernetes resources limit cpu configure
+## @param resources.limits.memory Kubernetes resources limit memory configure
+## @param resources.requests.cpu Kubernetes resources requests cpu configure
+## @param resources.requests.memory Kubernetes resources requests memory configure
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits: 
+    cpu: 200m
+    memory: 512Mi
+  requests: 
+    cpu: 100m
+    memory: 128Mi
+
+##
+## @section Metric configuraiton Parameters
+##
+metrics:
+  ## @param metrics.enabled Enable the export of Prometheus metrics
+  ##
+  enabled: false
+
+  serviceMonitor:
+    ## @param metrics.serviceMonitor.enabled if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)
+    ##
+    enabled: true
+    ## @param metrics.serviceMonitor.namespace Namespace in which Prometheus is running
+    ##
+    namespace: ""
+    ## @param metrics.serviceMonitor.interval Interval at which metrics should be scraped.
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ## e.g:
+    ## interval: 10s
+    ##
+    interval: ""
+    ## @param metrics.serviceMonitor.scrapeTimeout Timeout after which the scrape is ended
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ## e.g:
+    ## scrapeTimeout: 10s
+    ##
+    scrapeTimeout: ""
+    ## @param metrics.serviceMonitor.selector Prometheus instance selector labels
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ## e.g:
+    ## selector:
+    ##   prometheus: my-prometheus
+    ##
+    selector: {} # <please update if monitoring enabled
+    ## @param metrics.serviceMonitor.metricRelabelings Specify Metric Relabellings to add to the scrape endpoint
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.honorLabels Labels to honor to add to the scrape endpoint
+    ##
+    honorLabels: false
+    ## @param metrics.serviceMonitor.additionalLabels Additional custom labels for the ServiceMonitor
+    ##
+    additionalLabels: {}
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+    ##
+    jobLabel: ""
+
+    ## @param metrics.serviceMonitor.port service monitor port mapping with Kubernetes service endpoint port
+    port: metrics
+
+##
+## @section Resource Healthz configuraiton Parameters
+##
+## @param healthz.startupProbe Kubernetes container startupProbe
+## @param healthz.livenessProbe Kubernetes container livenessProbe
+## @param healthz.readinessProbe Kubernetes container readinessProbe
+healthz:
+  startupProbe: /liveness
+  livenessProbe: /liveness
+  readinessProbe: /healthz

@@ -1,0 +1,20 @@
+annotations:
+  category: Application
+apiVersion: v2
+appVersion: 1.0.0
+dependencies:
+  - name: common
+    repository: file://../common
+    tags:
+      - common
+    version: 1.x.x
+description: Chart for Prometheus Bulljs exporter
+keywords:
+  - VEriK
+  - Application
+  - Prometheus
+  - Bulljs
+  - exporter
+name: bull-exporter
+sources: ['https://github.com/UpHabit/bull_exporter']
+version: 1.0.0
