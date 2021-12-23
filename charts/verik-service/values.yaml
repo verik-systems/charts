@@ -31,7 +31,7 @@ nameOverride: "" # <please update>
 image:
   pullPolicy: IfNotPresent
   registry: "registry.hub.docker.com" 
-  repository: "test" 
+  repository: "verik01/bull-exporter" 
   tag: "v0.1.0" 
   # repository: "" # <please update>
   # tag: "" # <please update>
