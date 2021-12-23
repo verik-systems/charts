@@ -5,6 +5,31 @@ entries:
       category: Application
     apiVersion: v2
     appVersion: 1.0.1
+    created: "2021-12-23T04:57:34.735554687Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for Prometheus Bulljs exporter
+    digest: 3b63e61fe9cdca288083953f2275261791b351b879cc195535f0df62d6f3ccd8
+    keywords:
+    - VEriK
+    - Application
+    - Prometheus
+    - Bulljs
+    - exporter
+    name: bull-exporter
+    sources:
+    - https://github.com/UpHabit/bull_exporter
+    urls:
+    - https://github.com/veriks/charts/releases/download/bull-exporter-1.0.4/bull-exporter-1.0.4.tgz
+    version: 1.0.4
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.1
     created: "2021-12-23T04:34:25.894030507Z"
     dependencies:
     - name: common
@@ -239,4 +264,4 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/verik-service-1.0.0/verik-service-1.0.0.tgz
     version: 1.0.0
-generated: "2021-12-23T04:34:25.894046007Z"
+generated: "2021-12-23T04:57:34.735574287Z"
