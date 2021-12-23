@@ -2,16 +2,6 @@
     "title": "Chart Values",
     "type": "object",
     "properties": {
-        "commonLabels": {
-            "type": "object",
-            "properties": {
-                "app": {
-                    "type": "string",
-                    "description": "common app label",
-                    "default": "bull-exporter"
-                }
-            }
-        },
         "labels": {
             "type": "object",
             "properties": {
@@ -24,6 +14,11 @@
                     "type": "string",
                     "description": "Extra Labels to add to all deployed objects role",
                     "default": "exporter"
+                },
+                "release": {
+                    "type": "string",
+                    "description": "require for prometheus label capture metrics",
+                    "default": "prometheus"
                 }
             }
         },
@@ -208,7 +203,7 @@
         "containerPort": {
             "type": "number",
             "description": "Container port",
-            "default": 5959
+            "default": 9538
         },
         "service": {
             "type": "object",
@@ -322,7 +317,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable the export of Prometheus metrics",
-                    "default": false
+                    "default": true
                 },
                 "serviceMonitor": {
                     "type": "object",
@@ -349,8 +344,23 @@
                         },
                         "selector": {
                             "type": "object",
-                            "description": "Prometheus instance selector labels",
-                            "default": {}
+                            "properties": {
+                                "app": {
+                                    "type": "string",
+                                    "description": "app label",
+                                    "default": "bull"
+                                },
+                                "role": {
+                                    "type": "string",
+                                    "description": "role label",
+                                    "default": "exporter"
+                                },
+                                "release": {
+                                    "type": "string",
+                                    "description": "release prometheus",
+                                    "default": "prometheus"
+                                }
+                            }
                         },
                         "metricRelabelings": {
                             "type": "array",
@@ -375,7 +385,7 @@
                         "port": {
                             "type": "string",
                             "description": "service monitor port mapping with Kubernetes service endpoint port",
-                            "default": "metrics"
+                            "default": "http-port"
                         }
                     }
                 }
@@ -387,12 +397,12 @@
                 "startupProbe": {
                     "type": "string",
                     "description": "Kubernetes container startupProbe",
-                    "default": "/liveness"
+                    "default": "/healthz"
                 },
                 "livenessProbe": {
                     "type": "string",
                     "description": "Kubernetes container livenessProbe",
-                    "default": "/liveness"
+                    "default": "/healthz"
                 },
                 "readinessProbe": {
                     "type": "string",

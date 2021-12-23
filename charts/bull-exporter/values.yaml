@@ -4,19 +4,19 @@
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
 
-## @param commonLabels.app common app label
 ## @param commonLabels.app.kubernetes.io/name common Kubernetes app label
 ## @param commonLabels.app.kubernetes.io/component common Kubernetes app component
 commonLabels:
-  app: bull-exporter 
   app.kubernetes.io/name: bull-exporter 
   app.kubernetes.io/component: bull-exporter 
 
 ## @param labels.app Extra Labels to add to all deployed objects app
 ## @param labels.role Extra Labels to add to all deployed objects role
+## @param labels.release require for prometheus label capture metrics
 labels: 
     app: bull
     role: exporter
+    release: prometheus
 
 ## @param nameOverride String to partially override common.names.fullname
 nameOverride: "" 
@@ -294,7 +294,7 @@ resources:
 metrics:
   ## @param metrics.enabled Enable the export of Prometheus metrics
   ##
-  enabled: false
+  enabled: true
 
   serviceMonitor:
     ## @param metrics.serviceMonitor.enabled if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)
@@ -315,13 +315,22 @@ metrics:
     ## scrapeTimeout: 10s
     ##
     scrapeTimeout: ""
-    ## @param metrics.serviceMonitor.selector Prometheus instance selector labels
     ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
     ## e.g:
     ## selector:
     ##   prometheus: my-prometheus
     ##
-    selector: {} # <please update if monitoring enabled
+    ## @param metrics.serviceMonitor.selector.app app label
+    ## @param metrics.serviceMonitor.selector.app.kubernetes.io/component app.kubernetes.io/component label
+    ## @param metrics.serviceMonitor.selector.app.kubernetes.io/name app.kubernetes.io/name label
+    ## @param metrics.serviceMonitor.selector.role role label
+    ## @param metrics.serviceMonitor.selector.release release prometheus
+    selector:  # <please update if monitoring enabled
+      app: bull
+      app.kubernetes.io/component: bull-exporter
+      app.kubernetes.io/name: bull-exporter
+      role: exporter
+      release: prometheus
     ## @param metrics.serviceMonitor.metricRelabelings Specify Metric Relabellings to add to the scrape endpoint
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
     ##
@@ -337,7 +346,7 @@ metrics:
     jobLabel: ""
 
     ## @param metrics.serviceMonitor.port service monitor port mapping with Kubernetes service endpoint port
-    port: metrics
+    port: http-port
 
 ##
 ## @section Resource Healthz configuraiton Parameters
@@ -346,6 +355,6 @@ metrics:
 ## @param healthz.livenessProbe Kubernetes container livenessProbe
 ## @param healthz.readinessProbe Kubernetes container readinessProbe
 healthz:
-  startupProbe: /liveness
-  livenessProbe: /liveness
+  startupProbe: /healthz
+  livenessProbe: /healthz
   readinessProbe: /healthz

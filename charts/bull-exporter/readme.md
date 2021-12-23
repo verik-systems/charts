@@ -43,14 +43,14 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Global Parameters
 
-| Name                                       | Description                                        | Value           |
-| ------------------------------------------ | -------------------------------------------------- | --------------- |
-| `commonLabels.app`                         | common app label                                   | `bull-exporter` |
-| `commonLabels.app.kubernetes.io/name`      | common Kubernetes app label                        | `undefined`     |
-| `commonLabels.app.kubernetes.io/component` | common Kubernetes app component                    | `undefined`     |
-| `labels.app`                               | Extra Labels to add to all deployed objects app    | `bull`          |
-| `labels.role`                              | Extra Labels to add to all deployed objects role   | `exporter`      |
-| `nameOverride`                             | String to partially override common.names.fullname | `""`            |
+| Name                                       | Description                                        | Value        |
+| ------------------------------------------ | -------------------------------------------------- | ------------ |
+| `commonLabels.app.kubernetes.io/name`      | common Kubernetes app label                        | `undefined`  |
+| `commonLabels.app.kubernetes.io/component` | common Kubernetes app component                    | `undefined`  |
+| `labels.app`                               | Extra Labels to add to all deployed objects app    | `bull`       |
+| `labels.role`                              | Extra Labels to add to all deployed objects role   | `exporter`   |
+| `labels.release`                           | require for prometheus label capture metrics       | `prometheus` |
+| `nameOverride`                             | String to partially override common.names.fullname | `""`         |
 
 
 ### Common Parameters
@@ -117,12 +117,12 @@ The command removes all the Kubernetes components associated with the chart and 
 
 | Name                                       | Description                              | Value       |
 | ------------------------------------------ | ---------------------------------------- | ----------- |
-| `containerPort`                            | Container port                           | `5959`      |
+| `containerPort`                            | Container port                           | `9538`      |
 | `service.type`                             | Kubernetes service type                  | `ClusterIP` |
 | `service.labels`                           | Kubernetes service labels                | `{}`        |
 | `service.ports[0].name`                    | Kubernetes service for http port         | `http-port` |
-| `service.ports[0].port`                    | Kubernetes service port                  | `5959`      |
-| `service.ports[0].targetPort`              | Kubernetes service target container port | `5959`      |
+| `service.ports[0].port`                    | Kubernetes service port                  | `9538`      |
+| `service.ports[0].targetPort`              | Kubernetes service target container port | `9538`      |
 | `service.annotations.prometheus.io/scrape` | is scrape                                | `undefined` |
 | `service.annotations.prometheus.io/port`   | service port                             | `undefined` |
 
@@ -152,27 +152,31 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Metric configuraiton Parameters
 
-| Name                                       | Description                                                                                            | Value     |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------ | --------- |
-| `metrics.enabled`                          | Enable the export of Prometheus metrics                                                                | `false`   |
-| `metrics.serviceMonitor.enabled`           | if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`) | `true`    |
-| `metrics.serviceMonitor.namespace`         | Namespace in which Prometheus is running                                                               | `""`      |
-| `metrics.serviceMonitor.interval`          | Interval at which metrics should be scraped.                                                           | `""`      |
-| `metrics.serviceMonitor.scrapeTimeout`     | Timeout after which the scrape is ended                                                                | `""`      |
-| `metrics.serviceMonitor.selector`          | Prometheus instance selector labels                                                                    | `{}`      |
-| `metrics.serviceMonitor.metricRelabelings` | Specify Metric Relabellings to add to the scrape endpoint                                              | `[]`      |
-| `metrics.serviceMonitor.honorLabels`       | Labels to honor to add to the scrape endpoint                                                          | `false`   |
-| `metrics.serviceMonitor.additionalLabels`  | Additional custom labels for the ServiceMonitor                                                        | `{}`      |
-| `metrics.serviceMonitor.jobLabel`          | The name of the label on the target service to use as the job name in prometheus.                      | `""`      |
-| `metrics.serviceMonitor.port`              | service monitor port mapping with Kubernetes service endpoint port                                     | `metrics` |
+| Name                                                          | Description                                                                                            | Value        |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------ |
+| `metrics.enabled`                                             | Enable the export of Prometheus metrics                                                                | `true`       |
+| `metrics.serviceMonitor.enabled`                              | if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`) | `true`       |
+| `metrics.serviceMonitor.namespace`                            | Namespace in which Prometheus is running                                                               | `""`         |
+| `metrics.serviceMonitor.interval`                             | Interval at which metrics should be scraped.                                                           | `""`         |
+| `metrics.serviceMonitor.scrapeTimeout`                        | Timeout after which the scrape is ended                                                                | `""`         |
+| `metrics.serviceMonitor.selector.app`                         | app label                                                                                              | `bull`       |
+| `metrics.serviceMonitor.selector.app.kubernetes.io/component` | app.kubernetes.io/component label                                                                      | `undefined`  |
+| `metrics.serviceMonitor.selector.app.kubernetes.io/name`      | app.kubernetes.io/name label                                                                           | `undefined`  |
+| `metrics.serviceMonitor.selector.role`                        | role label                                                                                             | `exporter`   |
+| `metrics.serviceMonitor.selector.release`                     | release prometheus                                                                                     | `prometheus` |
+| `metrics.serviceMonitor.metricRelabelings`                    | Specify Metric Relabellings to add to the scrape endpoint                                              | `[]`         |
+| `metrics.serviceMonitor.honorLabels`                          | Labels to honor to add to the scrape endpoint                                                          | `false`      |
+| `metrics.serviceMonitor.additionalLabels`                     | Additional custom labels for the ServiceMonitor                                                        | `{}`         |
+| `metrics.serviceMonitor.jobLabel`                             | The name of the label on the target service to use as the job name in prometheus.                      | `""`         |
+| `metrics.serviceMonitor.port`                                 | service monitor port mapping with Kubernetes service endpoint port                                     | `http-port`  |
 
 
 ### Resource Healthz configuraiton Parameters
 
-| Name                     | Description                         | Value       |
-| ------------------------ | ----------------------------------- | ----------- |
-| `healthz.startupProbe`   | Kubernetes container startupProbe   | `/liveness` |
-| `healthz.livenessProbe`  | Kubernetes container livenessProbe  | `/liveness` |
-| `healthz.readinessProbe` | Kubernetes container readinessProbe | `/healthz`  |
+| Name                     | Description                         | Value      |
+| ------------------------ | ----------------------------------- | ---------- |
+| `healthz.startupProbe`   | Kubernetes container startupProbe   | `/healthz` |
+| `healthz.livenessProbe`  | Kubernetes container livenessProbe  | `/healthz` |
+| `healthz.readinessProbe` | Kubernetes container readinessProbe | `/healthz` |
 
 
