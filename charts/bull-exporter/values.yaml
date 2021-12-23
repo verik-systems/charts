@@ -183,7 +183,7 @@ extraArgs: []
 ##
 
 ## @param containerPort Container port
-containerPort: 5959
+containerPort: 9538
 
 ## @param service.type Kubernetes service type
 ## @param service.labels Kubernetes service labels
@@ -197,13 +197,13 @@ service:
   type: ClusterIP
   ports: 
     - name: http-port
-      port: 5959
-      targetPort: 5959
+      port: 9538
+      targetPort: 9538
   ## @param service.annotations.prometheus.io/scrape is scrape
   ## @param service.annotations.prometheus.io/port service port
   annotations:
     prometheus.io/scrape: 'true'
-    prometheus.io/port: '5959'
+    prometheus.io/port: '9538'
   #   service.beta.kubernetes.io/aws-load-balancer-type: nlb
   #   # Note that the backend talks over HTTP.
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
