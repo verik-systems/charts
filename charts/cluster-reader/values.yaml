@@ -1,11 +1,22 @@
+## @section Global Parameters
+## @param commonLabels.app common app label
+## @param commonLabels.app.kubernetes.io/name common Kubernetes app label
+## @param commonLabels.app.kubernetes.io/component common Kubernetes app component label
 commonLabels:
   app: cluster-reader
   app.kubernetes.io/name: cluster-reader
   app.kubernetes.io/component: cluster-reader
 
+## @param serviceAccount.name name of service account
 serviceAccount:
   name: cluster-reader
   
+## @param clusterRole.rules[0].apiGroups api groups rules
+## @param clusterRole.rules[0].resources resources is applied
+## @param clusterRole.rules[0].verbs resources verbs is applied
+## @param clusterRole.rules[1].apiGroups api groups rules
+## @param clusterRole.rules[1].resources resources is applied
+## @param clusterRole.rules[1].verbs resources verbs is applied
 clusterRole:
   rules:
   - apiGroups: ["*"]

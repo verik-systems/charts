@@ -1,12 +1,21 @@
+## @section Global Parameters
+## @param labels.app common app label
+## @param labels.app.kubernetes.io/name common Kubernetes app label
+## @param labels.app.kubernetes.io/component common Kubernetes app component label
+## @param labels.k8s-app another k8s app name
 labels:
   app: fluentd-cloudwatch
   app.kubernetes.io/name: fluentd-cloudwatch
   app.kubernetes.io/component: logging
   k8s-app: fluentd-cloudwatch
   
+## @param serviceAccount.name service account name
 serviceAccount:
   name: fluentd
-  
+
+## @param clusterRole.rules[0].apiGroups api groups rules
+## @param clusterRole.rules[0].resources resources is applied
+## @param clusterRole.rules[0].verbs resources verbs is applied
 clusterRole:
   rules:
   - apiGroups: [""]
@@ -16,10 +25,18 @@ clusterRole:
       - pods/logs
     verbs: ["get", "list", "watch"]
 
-daemonSet:
-  annotations:
-    configHash: 8915de4cf9c3551a8dc74c0137a3e83569d28c71044b0359c2578d2e0461825
 
+##
+## @section Resource quota configuraiton Parameters
+##
+
+## Metric Server containers' resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+## @param resources.limits.cpu Kubernetes resources limit cpu configure
+## @param resources.limits.memory Kubernetes resources limit memory configure
+## @param resources.requests.cpu Kubernetes resources requests cpu configure
+## @param resources.requests.memory Kubernetes resources requests memory configure
 resources:
   limits:
     cpu: 100m
@@ -28,10 +45,26 @@ resources:
     cpu: 100m
     memory: 256Mi
 
+
+##
+## @section configuraiton Parameters
+##
+
+## @param daemonSet.annotations.configHash config hash
+daemonSet:
+  annotations:
+    configHash: 8915de4cf9c3551a8dc74c0137a3e83569d28c71044b0359c2578d2e0461825
+
+## @param configMap.clusterInfo.cluster.name cluster name
+## @param configMap.clusterInfo.logs.region region logs
+## @param configMap.data.fluentConfig config of fluentd
+## @param configMap.data.containerConfig config of fluentd
+## @param configMap.data.systemd.conf config of fluentd
+## @param configMap.data.host.conf config of fluentd
 configMap:
   clusterInfo: 
-    cluster.name:  # <please input cluster name>
-    logs.region:   # <please input logs region>
+    cluster.name: "" # <please input cluster name>
+    logs.region:  "" # <please input logs region>
   data:
     fluentConfig: |
       @include containers.conf

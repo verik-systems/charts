@@ -1,0 +1,52 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "commonLabels": {
+            "type": "object",
+            "properties": {
+                "app": {
+                    "type": "string",
+                    "description": "common app label",
+                    "default": "cluster-reader"
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "name of service account",
+                    "default": "cluster-reader"
+                }
+            }
+        },
+        "clusterRole": {
+            "type": "object",
+            "properties": {
+                "rules": {
+                    "type": "array",
+                    "description": "api groups rules",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "apiGroups": {
+                                "type": "array",
+                                "description": "api groups rules"
+                            },
+                            "resources": {
+                                "type": "array",
+                                "description": "resources is applied"
+                            },
+                            "verbs": {
+                                "type": "array",
+                                "description": "resources verbs is applied"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

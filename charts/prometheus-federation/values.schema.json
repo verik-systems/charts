@@ -1,0 +1,56 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "commonLabels": {
+            "type": "object",
+            "properties": {
+                "app": {
+                    "type": "string",
+                    "description": "common app label",
+                    "default": "prometheus"
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "name of service account",
+                    "default": "prometheus-federation"
+                }
+            }
+        },
+        "role": {
+            "type": "object",
+            "properties": {
+                "rules": {
+                    "type": "array",
+                    "description": "api groups rules",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "apiGroups": {
+                                "type": "array",
+                                "description": "api groups rules"
+                            },
+                            "resources": {
+                                "type": "array",
+                                "description": "resources is applied"
+                            },
+                            "resourceNames": {
+                                "type": "array",
+                                "description": "resource name"
+                            },
+                            "verbs": {
+                                "type": "array",
+                                "description": "resources verbs is applied"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,127 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "labels": {
+            "type": "object",
+            "properties": {
+                "app": {
+                    "type": "string",
+                    "description": "common app label",
+                    "default": "fluentd-cloudwatch"
+                },
+                "k8s-app": {
+                    "type": "string",
+                    "description": "another k8s app name",
+                    "default": "fluentd-cloudwatch"
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "service account name",
+                    "default": "fluentd"
+                }
+            }
+        },
+        "clusterRole": {
+            "type": "object",
+            "properties": {
+                "rules": {
+                    "type": "array",
+                    "description": "api groups rules",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "apiGroups": {
+                                "type": "array",
+                                "description": "api groups rules"
+                            },
+                            "resources": {
+                                "type": "array",
+                                "description": "resources is applied"
+                            },
+                            "verbs": {
+                                "type": "array",
+                                "description": "resources verbs is applied"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Kubernetes resources limit cpu configure",
+                            "default": "100m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Kubernetes resources limit memory configure",
+                            "default": "512Mi"
+                        }
+                    }
+                },
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Kubernetes resources requests cpu configure",
+                            "default": "100m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Kubernetes resources requests memory configure",
+                            "default": "256Mi"
+                        }
+                    }
+                }
+            }
+        },
+        "daemonSet": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object",
+                    "properties": {
+                        "configHash": {
+                            "type": "string",
+                            "description": "config hash",
+                            "default": "8915de4cf9c3551a8dc74c0137a3e83569d28c71044b0359c2578d2e0461825"
+                        }
+                    }
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "fluentConfig": {
+                            "type": "string",
+                            "description": "config of fluentd",
+                            "default": "@include containers.conf\n@include systemd.conf\n@include host.conf\n\n<match fluent.**>\n  @type null\n</match>\n"
+                        },
+                        "containerConfig": {
+                            "type": "string",
+                            "description": "config of fluentd",
+                            "default": "<source>\n  @type tail\n  @id in_tail_container_logs\n  @label @containers\n  path /var/log/containers/*.log\n  exclude_path [\"/var/log/containers/cloudwatch-agent*\", \"/var/log/containers/fluentd*\"]\n  pos_file /var/log/fluentd-containers.log.pos\n  tag *\n  read_from_head true\n  <parse>\n    @type json\n    time_format %Y-%m-%dT%H:%M:%S.%NZ\n  </parse>\n</source>\n\n<source>\n  @type tail\n  @id in_tail_cwagent_logs\n  @label @cwagentlogs\n  path /var/log/containers/cloudwatch-agent*\n  pos_file /var/log/cloudwatch-agent.log.pos\n  tag *\n  read_from_head true\n  <parse>\n    @type json\n    time_format %Y-%m-%dT%H:%M:%S.%NZ\n  </parse>\n</source>\n\n<source>\n  @type tail\n  @id in_tail_fluentd_logs\n  @label @fluentdlogs\n  path /var/log/containers/fluentd*\n  pos_file /var/log/fluentd.log.pos\n  tag *\n  read_from_head true\n  <parse>\n    @type json\n    time_format %Y-%m-%dT%H:%M:%S.%NZ\n  </parse>\n</source>\n\n<label @fluentdlogs>\n  <filter **>\n    @type kubernetes_metadata\n    @id filter_kube_metadata_fluentd\n  </filter>\n\n  <filter **>\n    @type record_transformer\n    @id filter_fluentd_stream_transformer\n    <record>\n      stream_name ${tag_parts[3]}\n    </record>\n    remove_keys $.kubernetes.pod_id, $.kubernetes.master_url, $.kubernetes.container_image_id, $.kubernetes.namespace_id\n  </filter>\n\n  <match **>\n    @type relabel\n    @label @NORMAL\n  </match>\n</label>\n\n<label @containers>\n  <filter **>\n    @type kubernetes_metadata\n    @id filter_kube_metadata\n  </filter>\n\n  <filter **>\n    @type record_transformer\n    @id filter_containers_stream_transformer\n    <record>\n      stream_name ${tag_parts[3]}\n    </record>\n    remove_keys $.kubernetes.pod_id, $.kubernetes.master_url, $.kubernetes.container_image_id, $.kubernetes.namespace_id\n  </filter>\n\n  <filter **>\n    @type concat\n    key log\n    multiline_start_regexp /^\\S/\n    separator \"\"\n    flush_interval 5\n    timeout_label @NORMAL\n  </filter>\n\n  <match **>\n    @type relabel\n    @label @NORMAL\n  </match>\n</label>\n\n<label @cwagentlogs>\n  <filter **>\n    @type kubernetes_metadata\n    @id filter_kube_metadata_cwagent\n  </filter>\n\n  <filter **>\n    @type record_transformer\n    @id filter_cwagent_stream_transformer\n    <record>\n      stream_name ${tag_parts[3]}\n    </record>\n    remove_keys $.kubernetes.pod_id, $.kubernetes.master_url, $.kubernetes.container_image_id, $.kubernetes.namespace_id\n  </filter>\n\n  <filter **>\n    @type concat\n    key log\n    multiline_start_regexp /^\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}/\n    separator \"\"\n    flush_interval 5\n    timeout_label @NORMAL\n  </filter>\n\n  <match **>\n    @type relabel\n    @label @NORMAL\n  </match>\n</label>\n\n<label @NORMAL>\n  <match **>\n    @type cloudwatch_logs\n    @id out_cloudwatch_logs_containers\n    region \"#{ENV.fetch('REGION')}\"\n    log_group_name \"/aws/containerinsights/#{ENV.fetch('CLUSTER_NAME')}/application\"\n    log_stream_name_key stream_name\n    remove_log_stream_name_key true\n    auto_create_stream true\n    <buffer>\n      flush_interval 5\n      chunk_limit_size 2m\n      queued_chunks_limit_size 32\n      retry_forever true\n    </buffer>\n  </match>\n</label>\n"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

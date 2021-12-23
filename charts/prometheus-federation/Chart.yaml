@@ -15,4 +15,4 @@ keywords:
   - authorization
 name: prometheus-federation
 sources: ['https://prometheus.io/docs/prometheus/latest/federation']
-version: 1.0.0
+version: 1.0.1

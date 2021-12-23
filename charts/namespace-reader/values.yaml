@@ -1,11 +1,23 @@
+## @section Global Parameters
+## @param commonLabels.app common app label
+## @param commonLabels.app.kubernetes.io/name common Kubernetes app label
+## @param commonLabels.app.kubernetes.io/component common Kubernetes app component label
 commonLabels:
   app: namespace-reader
   app.kubernetes.io/name: namespace-reader
   app.kubernetes.io/component: namespace-reader
 
+## @param serviceAccount.name name of service account
 serviceAccount:
   name: namespace-reader
+
   
+## @param role.rules[0].apiGroups api groups rules
+## @param role.rules[0].resources resources is applied
+## @param role.rules[0].verbs resources verbs is applied
+## @param role.rules[1].apiGroups api groups rules
+## @param role.rules[1].resources resources is applied
+## @param role.rules[1].verbs resources verbs is applied
 role:
   rules:
   - apiGroups: ["*"]
