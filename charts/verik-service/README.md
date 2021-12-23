@@ -43,27 +43,29 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Global Parameters
 
-| Name                                       | Description                                        | Value           |
-| ------------------------------------------ | -------------------------------------------------- | --------------- |
-| `commonLabels.app`                         | common app label                                   | `verik-service` |
-| `commonLabels.app.kubernetes.io/name`      | common Kubernetes app label                        | `undefined`     |
-| `commonLabels.app.kubernetes.io/component` | common Kubernetes app component                    | `undefined`     |
-| `labels`                                   | Extra Labels to add to all deployed objects        | `""`            |
-| `nameOverride`                             | String to partially override common.names.fullname | `""`            |
+| Name                                       | Description                                        | Value        |
+| ------------------------------------------ | -------------------------------------------------- | ------------ |
+| `commonLabels.app.kubernetes.io/name`      | common Kubernetes app label                        | `undefined`  |
+| `commonLabels.app.kubernetes.io/component` | common Kubernetes app component                    | `undefined`  |
+| `labels.app`                               | common app label                                   | `bull`       |
+| `labels.role`                              | common role label                                  | `exporter`   |
+| `labels.release`                           | allow prometheus scrape metrics                    | `prometheus` |
+| `nameOverride`                             | String to partially override common.names.fullname | `""`         |
 
 
 ### Common Parameters
 
-| Name               | Description                                 | Value             |
-| ------------------ | ------------------------------------------- | ----------------- |
-| `image.pullPolicy` | pull image policy                           | `IfNotPresent`    |
-| `image.registry`   | image registry                              | `""`              |
-| `image.repository` | image repository                            | `""`              |
-| `image.tag`        | image tag                                   | `""`              |
-| `replicas`         | Number of Metrics Server replicas to deploy | `2`               |
-| `extraEnvVars`     | Extra environments                          | `[]`              |
-| `migrationArgs`    | command arg for migration script            | `["./migration"]` |
-| `configurations`   | configmap configuration data                | `[]`              |
+| Name                    | Description                                 | Value                     |
+| ----------------------- | ------------------------------------------- | ------------------------- |
+| `image.pullPolicy`      | pull image policy                           | `IfNotPresent`            |
+| `image.registry`        | image registry                              | `registry.hub.docker.com` |
+| `image.repository`      | image repository                            | `verik01/bull-exporter`   |
+| `image.tag`             | image tag                                   | `v0.1.0`                  |
+| `replicas`              | Number of Metrics Server replicas to deploy | `2`                       |
+| `extraEnvVars[0].name`  | Extra environments name                     | `GET_HOSTS_FROM`          |
+| `extraEnvVars[0].value` | Extra environments value                    | `dns`                     |
+| `migrationArgs`         | command arg for migration script            | `["./migration"]`         |
+| `configurations`        | configmap configuration data                | `[]`                      |
 
 
 ### Pod configuration Parameters
@@ -123,15 +125,16 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Ingress configuration Parameters
 
-| Name                                              | Description                                                      | Value       |
-| ------------------------------------------------- | ---------------------------------------------------------------- | ----------- |
-| `ingress.enabled`                                 | Kubernetes ingress enabled                                       | `false`     |
-| `ingress.annotations.kubernetes.io/ingress.class` | Kubernetes ingress annotations kubernetes.io/ingress.class nginx | `undefined` |
-| `ingress.labels`                                  | Kubernetes ingress labels                                        | `{}`        |
-| `ingress.port`                                    | Kubernetes ingress port                                          | `80`        |
-| `ingress.path`                                    | Kubernetes ingress path                                          | `/`         |
-| `ingress.pathType`                                | Kubernetes ingress pathType                                      | `Prefix`    |
-| `ingress.tls`                                     | Kubernetes ingress tls                                           | `[]`        |
+| Name                                              | Description                                                      | Value                      |
+| ------------------------------------------------- | ---------------------------------------------------------------- | -------------------------- |
+| `ingress.enabled`                                 | Kubernetes ingress enabled                                       | `false`                    |
+| `ingress.annotations.kubernetes.io/ingress.class` | Kubernetes ingress annotations kubernetes.io/ingress.class nginx | `undefined`                |
+| `ingress.labels`                                  | Kubernetes ingress labels                                        | `{}`                       |
+| `ingress.port`                                    | Kubernetes ingress port                                          | `80`                       |
+| `ingress.path`                                    | Kubernetes ingress path                                          | `/`                        |
+| `ingress.pathType`                                | Kubernetes ingress pathType                                      | `Prefix`                   |
+| `ingress.tls`                                     | Kubernetes ingress tls                                           | `[]`                       |
+| `ingress.hosts`                                   | hosts list                                                       | `["app.veriksystems.com"]` |
 
 
 ### Resource quota configuraiton Parameters

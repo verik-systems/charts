@@ -9,9 +9,7 @@ APP VERSION: {{ .Chart.AppVersion }}
 
 {{- if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.name }}{{ . }}
-  {{- end }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host }}{{ . }}
 {{- end }}
 {{- else if contains "NodePort" .Values.service.type }}
     export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "common.names.fullname" . }})
@@ -21,9 +19,5 @@ APP VERSION: {{ .Chart.AppVersion }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "common.names.fullname" . }}'
     export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "common.names.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-    echo http://$SERVICE_IP:{{ .Values.service.ports.grafana }}
-{{- else if contains "ClusterIP" .Values.service.type }}
-    echo "Browse to http://127.0.0.1:8080"
-    kubectl port-forward svc/{{ include "common.names.fullname" . }} 8080:{{ .Values.service.ports.grafana }} &
 {{- end }}
 

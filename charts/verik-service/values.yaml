@@ -4,16 +4,19 @@
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
 
-## @param commonLabels.app common app label
 ## @param commonLabels.app.kubernetes.io/name common Kubernetes app label
 ## @param commonLabels.app.kubernetes.io/component common Kubernetes app component
 commonLabels:
-  app: verik-service # <please update>
   app.kubernetes.io/name: verik-service # <please update>
   app.kubernetes.io/component: verik-service # <please update>
 
-## @param labels Extra Labels to add to all deployed objects
-labels: ""
+## @param labels.app common app label
+## @param labels.role common role label
+## @param labels.release allow prometheus scrape metrics
+labels: 
+    app: verik-service
+    role: worker
+    release: prometheus
 
 ## @param nameOverride String to partially override common.names.fullname
 nameOverride: "" # <please update>
@@ -27,9 +30,11 @@ nameOverride: "" # <please update>
 ## @param image.tag image tag
 image:
   pullPolicy: IfNotPresent
-  registry: "" # <please update>
-  repository: "" # <please update>
-  tag: "" # <please update>
+  registry: "registry.hub.docker.com" 
+  repository: "test" 
+  tag: "v0.1.0" 
+  # repository: "" # <please update>
+  # tag: "" # <please update>
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -46,8 +51,11 @@ image:
 ## @param replicas Number of Metrics Server replicas to deploy
 replicas: 2
 
-## @param extraEnvVars Extra environments
-extraEnvVars: [] # <please update>
+## @param extraEnvVars[0].name Extra environments name
+## @param extraEnvVars[0].value Extra environments value
+extraEnvVars: 
+  - name: GET_HOSTS_FROM
+    value: dns
 ## @param migrationArgs command arg for migration script
 migrationArgs: ["./migration"]
 
@@ -126,7 +134,7 @@ affinity: {}
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
 nodeSelector: 
-  alpha.eksctl.io/nodegroup-name: # <please update>
+  alpha.eksctl.io/nodegroup-name: "please_update"
 
 ## @param tolerations Tolerations for pod assignment. Evaluated as a template.
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -213,10 +221,11 @@ service:
 ## @param ingress.path Kubernetes ingress path
 ## @param ingress.pathType Kubernetes ingress pathType
 ## @param ingress.tls Kubernetes ingress tls
+## @param ingress.hosts hosts list
 ingress:
   ## If true, VEriK Service Ingress will be created
   ##
-  enabled: false
+  enabled: true
 
   ## Annotations for VEriK Service Ingress
   ##
@@ -233,8 +242,8 @@ ingress:
   ## Hostnames.
   ## Must be provided if Ingress is enable.
   ##
-  # hosts:
-  #   - app.veriksystems.com
+  hosts:
+    - app.veriksystems.com
 
   ## Path for VEriK Service ingress
   path: /

@@ -2,20 +2,25 @@
     "title": "Chart Values",
     "type": "object",
     "properties": {
-        "commonLabels": {
+        "labels": {
             "type": "object",
             "properties": {
                 "app": {
                     "type": "string",
                     "description": "common app label",
-                    "default": "verik-service"
+                    "default": "bull"
+                },
+                "role": {
+                    "type": "string",
+                    "description": "common role label",
+                    "default": "exporter"
+                },
+                "release": {
+                    "type": "string",
+                    "description": "allow prometheus scrape metrics",
+                    "default": "prometheus"
                 }
             }
-        },
-        "labels": {
-            "type": "string",
-            "description": "Extra Labels to add to all deployed objects",
-            "default": ""
         },
         "nameOverride": {
             "type": "string",
@@ -33,17 +38,17 @@
                 "registry": {
                     "type": "string",
                     "description": "image registry",
-                    "default": ""
+                    "default": "registry.hub.docker.com"
                 },
                 "repository": {
                     "type": "string",
                     "description": "image repository",
-                    "default": ""
+                    "default": "verik01/bull-exporter"
                 },
                 "tag": {
                     "type": "string",
                     "description": "image tag",
-                    "default": ""
+                    "default": "v0.1.0"
                 }
             }
         },
@@ -54,8 +59,20 @@
         },
         "extraEnvVars": {
             "type": "array",
-            "description": "Extra environments",
-            "default": []
+            "description": "Extra environments name",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Extra environments name"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Extra environments value"
+                    }
+                }
+            }
         },
         "migrationArgs": {
             "type": "array",
@@ -255,6 +272,13 @@
                     "type": "array",
                     "description": "Kubernetes ingress tls",
                     "default": []
+                },
+                "hosts": {
+                    "type": "array",
+                    "description": "hosts list",
+                    "default": [
+                        "app.veriksystems.com"
+                    ]
                 }
             }
         },

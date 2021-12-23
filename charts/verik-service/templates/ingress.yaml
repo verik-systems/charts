@@ -1,4 +1,9 @@
 {{- if .Values.ingress.enabled -}}
+{{- $pathType := .Values.ingress.pathType | default "ImplementationSpecific" -}}
+{{- $path := .Values.ingress.path | default "/" -}}
+{{- $port := .Values.ingress.port | default "80" -}}
+{{- $name := (include "common.names.name" .) -}}
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -22,13 +27,15 @@ spec:
     - host: {{ tpl $host $ }}
       http:
         paths:
-          - path: {{ .Values.ingress.path }}
-            pathType: {{ .Values.ingress.pathType }}
+          - path: {{ $path }}
+            {{- if $pathType }}
+            pathType: {{ $pathType }}
+            {{- end }}
             backend:
               service:
-                name: {{ template "common.names.name" . }}
+                name: {{ $name }}
                 port:
-                  number: {{ .Values.ingress.port }}
+                  number: {{ $port }}
   {{- end -}}
   {{- end -}}
 {{- end -}}
