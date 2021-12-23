@@ -5,6 +5,31 @@ entries:
       category: Application
     apiVersion: v2
     appVersion: 1.0.1
+    created: "2021-12-23T05:31:27.944231958Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for Prometheus Bulljs exporter
+    digest: 98837a6fac7669837b7d42b93f084ccb660a7b815c555a0d998d70cef7660c99
+    keywords:
+    - VEriK
+    - Application
+    - Prometheus
+    - Bulljs
+    - exporter
+    name: bull-exporter
+    sources:
+    - https://github.com/UpHabit/bull_exporter
+    urls:
+    - https://github.com/veriks/charts/releases/download/bull-exporter-1.0.5/bull-exporter-1.0.5.tgz
+    version: 1.0.5
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.1
     created: "2021-12-23T04:57:34.735554687Z"
     dependencies:
     - name: common
@@ -106,6 +131,28 @@ entries:
       category: Authorization
     apiVersion: v2
     appVersion: 1.0.0
+    created: "2021-12-23T05:31:28.074005817Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init cluster reader account
+    digest: cf83d789245ee4f0f7fefe703e5254d67bf8ba05246e7c06b7d69b7ebaeb2762
+    keywords:
+    - rbac
+    - cluster reader
+    name: cluster-reader
+    sources:
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    urls:
+    - https://github.com/veriks/charts/releases/download/cluster-reader-1.0.1/cluster-reader-1.0.1.tgz
+    version: 1.0.1
+  - annotations:
+      category: Authorization
+    apiVersion: v2
+    appVersion: 1.0.0
     created: "2021-12-19T17:00:19.882376522Z"
     dependencies:
     - name: common
@@ -151,6 +198,29 @@ entries:
       category: Logging
     apiVersion: v2
     appVersion: 1.0.0
+    created: "2021-12-23T05:31:28.203062586Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure send logs to CloudWatch Logs
+    digest: 30f0d3aac61fe5a6c9efdee7fff651f8d3b16a7f00acfa9d784a7e2928be9d13
+    keywords:
+    - CloudWatch
+    - logging
+    - fluentd
+    name: fluentd-cloudwatch
+    sources:
+    - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html
+    urls:
+    - https://github.com/veriks/charts/releases/download/fluentd-cloudwatch-1.0.1/fluentd-cloudwatch-1.0.1.tgz
+    version: 1.0.1
+  - annotations:
+      category: Logging
+    apiVersion: v2
+    appVersion: 1.0.0
     created: "2021-12-21T04:45:07.962402797Z"
     dependencies:
     - name: common
@@ -171,6 +241,28 @@ entries:
     - https://github.com/veriks/charts/releases/download/fluentd-cloudwatch-1.0.0/fluentd-cloudwatch-1.0.0.tgz
     version: 1.0.0
   namespace-reader:
+  - annotations:
+      category: Authorization
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-12-23T05:31:28.337525379Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init namespace reader account
+    digest: ecacfbff1b7a838afb4d980fa9c6c2c162e4fadaf650ac70029f94f12c5528a3
+    keywords:
+    - rbac
+    - namespace reader
+    name: namespace-reader
+    sources:
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    urls:
+    - https://github.com/veriks/charts/releases/download/namespace-reader-1.0.1/namespace-reader-1.0.1.tgz
+    version: 1.0.1
   - annotations:
       category: Authorization
     apiVersion: v2
@@ -198,6 +290,29 @@ entries:
       category: Monitoring
     apiVersion: v2
     appVersion: 1.0.0
+    created: "2021-12-23T05:31:28.458863658Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure prometheus federation
+    digest: 92a645b759e6ac3f961d39686483f04fa852c7fd67ecc87f0f2f02799640ca51
+    keywords:
+    - prometheus
+    - federation
+    - authorization
+    name: prometheus-federation
+    sources:
+    - https://prometheus.io/docs/prometheus/latest/federation
+    urls:
+    - https://github.com/veriks/charts/releases/download/prometheus-federation-1.0.1/prometheus-federation-1.0.1.tgz
+    version: 1.0.1
+  - annotations:
+      category: Monitoring
+    apiVersion: v2
+    appVersion: 1.0.0
     created: "2021-12-19T17:00:20.278156038Z"
     dependencies:
     - name: common
@@ -218,6 +333,29 @@ entries:
     - https://github.com/veriks/charts/releases/download/prometheus-federation-1.0.0/prometheus-federation-1.0.0.tgz
     version: 1.0.0
   verik-service:
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-12-23T05:31:28.599640561Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init VEriK services
+    digest: 4eb77aad4b4cace4947bfce7299451cada3c1f37eeba599e47bc48f2e348b333
+    keywords:
+    - VEriK
+    - Application
+    - Services
+    name: verik-service
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/veriks/charts/releases/download/verik-service-1.0.2/verik-service-1.0.2.tgz
+    version: 1.0.2
   - annotations:
       category: Application
     apiVersion: v2
@@ -264,4 +402,4 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/verik-service-1.0.0/verik-service-1.0.0.tgz
     version: 1.0.0
-generated: "2021-12-23T04:57:34.735574287Z"
+generated: "2021-12-23T05:31:28.599677561Z"
