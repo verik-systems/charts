@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "common.names.name" . }}-job
+  name: {{ .Values.labels.app }}-job
   namespace: {{ .Release.Namespace }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.commonLabels }}
@@ -18,7 +18,7 @@ spec:
   template:
     spec:
       containers:
-        - name: {{ template "common.names.name" . }}-migration
+        - name: {{ .Values.labels.app }}-migration
           image: {{ template "application.image" . }}
           command: ["/bin/sh","-c"]
           {{- if .Values.migration.skip }}

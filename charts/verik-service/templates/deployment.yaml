@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "common.names.name" . }}
+  name: {{ .Values.labels.app }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
@@ -34,7 +34,7 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
-      serviceAccountName: {{ template "common.names.name" . }}
+      serviceAccountName: {{ .Values.labels.app }}
       {{- if .Values.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.affinity "context" $) | nindent 8 }}
       {{- else }}
@@ -53,7 +53,7 @@ spec:
       hostNetwork: true
       {{- end }}
       containers:
-        - name:  {{ template "common.names.name" . }} 
+        - name:  {{ .Values.labels.app }} 
           image: {{ template "application.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           args:
