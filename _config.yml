@@ -1,1 +1,6 @@
 theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
+title: VEriK Helm Charts
+description: Welcome to VEriK Helm Charts
+author: VEriK
