@@ -8,12 +8,12 @@
                 "app": {
                     "type": "string",
                     "description": "common app label",
-                    "default": "bull"
+                    "default": "verik-service"
                 },
                 "role": {
                     "type": "string",
                     "description": "common role label",
-                    "default": "exporter"
+                    "default": "worker"
                 },
                 "release": {
                     "type": "string",
@@ -43,7 +43,7 @@
                 "repository": {
                     "type": "string",
                     "description": "image repository",
-                    "default": "verik01/bull-exporter"
+                    "default": "test"
                 },
                 "tag": {
                     "type": "string",
@@ -74,12 +74,27 @@
                 }
             }
         },
-        "migrationArgs": {
-            "type": "array",
-            "description": "command arg for migration script",
-            "default": [
-                "./migration"
-            ]
+        "migration": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "migration script enabled",
+                    "default": false
+                },
+                "skip": {
+                    "type": "boolean",
+                    "description": "migration script skip",
+                    "default": true
+                },
+                "migrationArgs": {
+                    "type": "array",
+                    "description": "command arg for migration script",
+                    "default": [
+                        "./migration"
+                    ]
+                }
+            }
         },
         "configurations": {
             "type": "array",
@@ -246,7 +261,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Kubernetes ingress enabled",
-                    "default": false
+                    "default": true
                 },
                 "labels": {
                     "type": "object",

@@ -1,3 +1,4 @@
+{{- if .Values.migration.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -20,10 +21,10 @@ spec:
         - name: {{ template "common.names.name" . }}-migration
           image: {{ template "application.image" . }}
           command: ["/bin/sh","-c"]
-          {{- if .Values.migrate }}
-          args: {{ .Values.migrationArgs }}
-          {{- else }}
+          {{- if .Values.migration.skip }}
           args: ['echo "This migration job has been skipped!"']
+          {{- else }}
+          args: {{ .Values.migration.migrationArgs }}
           {{- end }}
           env:
             {{- if .Values.extraEnvVars }}
@@ -31,3 +32,4 @@ spec:
             {{- end }}
       restartPolicy: Never
   backoffLimit: 1
+{{- end -}}

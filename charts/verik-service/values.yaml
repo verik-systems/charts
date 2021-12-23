@@ -14,9 +14,9 @@ commonLabels:
 ## @param labels.role common role label
 ## @param labels.release allow prometheus scrape metrics
 labels: 
-    app: verik-service
-    role: worker
-    release: prometheus
+  app: verik-service
+  role: worker
+  release: prometheus
 
 ## @param nameOverride String to partially override common.names.fullname
 nameOverride: "" # <please update>
@@ -56,8 +56,13 @@ replicas: 2
 extraEnvVars: 
   - name: GET_HOSTS_FROM
     value: dns
-## @param migrationArgs command arg for migration script
-migrationArgs: ["./migration"]
+## @param migration.enabled migration script enabled
+## @param migration.skip migration script skip
+## @param migration.migrationArgs command arg for migration script
+migration:
+  enabled: false
+  skip: true
+  migrationArgs: ["./migration"]
 
 ## @param configurations configmap configuration data
 configurations: []
