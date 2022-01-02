@@ -43,7 +43,7 @@
                 "repository": {
                     "type": "string",
                     "description": "image repository",
-                    "default": "test"
+                    "default": "verik01/bull-exporter"
                 },
                 "tag": {
                     "type": "string",
@@ -414,6 +414,46 @@
                     "type": "string",
                     "description": "Kubernetes container readinessProbe",
                     "default": "/healthz"
+                }
+            }
+        },
+        "scaling": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "enable/disable KEDA scale based on SQS metrics",
+                    "default": false
+                },
+                "AWS_ACCESS_KEY_ID": {
+                    "type": "string",
+                    "description": "aws_access_key_id",
+                    "default": "please update your aws_access_key_id"
+                },
+                "AWS_SECRET_ACCESS_KEY": {
+                    "type": "string",
+                    "description": "aws_secret_access_key",
+                    "default": "please update your aws_secret_access_key"
+                },
+                "policy": {
+                    "type": "object",
+                    "properties": {
+                        "queueURL": {
+                            "type": "string",
+                            "description": "queueURL - Full URL for the SQS Queue.",
+                            "default": "SQS queue name"
+                        },
+                        "queueLength": {
+                            "type": "string",
+                            "description": "- Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of scaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.",
+                            "default": "5"
+                        },
+                        "awsRegion": {
+                            "type": "string",
+                            "description": "- AWS Region for the SQS Queue.",
+                            "default": "eu-west-1"
+                        }
+                    }
                 }
             }
         }

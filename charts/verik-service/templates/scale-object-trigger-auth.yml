@@ -1,0 +1,17 @@
+{{- if .Values.scaling }}
+{{- if .Values.scaling.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: {{ .Values.labels.app }}-trigger-auth-aws-credentials
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretTargetRef:
+  - parameter: awsAccessKeyID     
+    name: {{ .Values.labels.app }}-aws-sqs-scaled-object
+    key: AWS_ACCESS_KEY_ID        
+  - parameter: awsSecretAccessKey 
+    name: {{ .Values.labels.app }}-aws-sqs-scaled-object
+    key: AWS_SECRET_ACCESS_KEY    
+{{- end }}
+{{- end }}

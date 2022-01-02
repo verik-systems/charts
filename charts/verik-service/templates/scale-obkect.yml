@@ -1,0 +1,18 @@
+{{- if .Values.scaling }}
+{{- if .Values.scaling.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ .Values.labels.app }}-aws-sqs-scaled-object
+  namespace: {{ .Release.Namespace }}
+spec:
+  scaleTargetRef:
+    name: {{ .Values.labels.app }}
+  triggers:
+  - type: aws-sqs-queue
+    authenticationRef:
+      name: {{ .Values.labels.app }}-trigger-auth-aws-credentials
+    metadata:
+      {{- include "common.tplvalues.render" ( dict "value" .Values.scaling.policy "context" $ ) | nindent 8 }}
+{{- end }}
+{{- end }}

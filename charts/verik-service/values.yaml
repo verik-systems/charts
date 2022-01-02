@@ -346,3 +346,22 @@ healthz:
   startupProbe: /liveness
   livenessProbe: /liveness
   readinessProbe: /healthz
+
+##
+## @section Resource Scaling configuraiton Parameters
+##
+## @param scaling.enabled enable/disable KEDA scale based on SQS metrics
+## @param scaling.AWS_ACCESS_KEY_ID aws_access_key_id
+## @param scaling.AWS_SECRET_ACCESS_KEY aws_secret_access_key
+## @param scaling.policy.queueURL queueURL - Full URL for the SQS Queue.
+## @param scaling.policy.queueLength - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of scaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.
+## @param scaling.policy.awsRegion - AWS Region for the SQS Queue.
+scaling:
+  enabled: false
+  AWS_ACCESS_KEY_ID: "please update your aws_access_key_id" 
+  AWS_SECRET_ACCESS_KEY: "please update your aws_secret_access_key"
+  policy:
+    queueURL: "SQS queue name" 
+    queueLength: "5"
+    awsRegion: "eu-west-1"
+  
