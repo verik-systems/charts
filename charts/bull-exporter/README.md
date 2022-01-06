@@ -59,7 +59,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | ------------------------------ | ------------------------------------------------ | -------------------------- |
 | `image.pullPolicy`             | pull image policy                                | `IfNotPresent`             |
 | `image.registry`               | image registry                                   | `registry.hub.docker.com`  |
-| `image.repository`             | image repository                                 | `verik01/bull-exporter`    |
+| `image.repository`             | image repository                                 | `veriks/bull-exporter`    |
 | `image.tag`                    | image tag                                        | `v0.1.0`                   |
 | `replicas`                     | Number of Metrics Server replicas to deploy      | `1`                        |
 | `automountServiceAccountToken` | auto mount service account token                 | `false`                    |

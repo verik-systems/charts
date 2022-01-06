@@ -1,0 +1,41 @@
+{{- if .Values.ingress.enabled -}}
+{{- $pathType := .Values.ingress.pathType | default "ImplementationSpecific" -}}
+{{- $path := .Values.ingress.path | default "/" -}}
+{{- $port := .Values.ingress.port | default "80" -}}
+{{- $name := .Values.labels.app -}}
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+{{- if .Values.ingress.annotations }}
+  annotations:
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{- end }}
+  name: {{ .Values.labels.app }}-ingress
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+spec:
+  rules:
+  {{- if .Values.ingress.hosts }}
+  {{- range $host := .Values.ingress.hosts }}
+    - host: {{ tpl $host $ }}
+      http:
+        paths:
+          - path: {{ $path }}
+            {{- if $pathType }}
+            pathType: {{ $pathType }}
+            {{- end }}
+            backend:
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ $port }}
+  {{- end -}}
+  {{- end -}}
+{{- end -}}

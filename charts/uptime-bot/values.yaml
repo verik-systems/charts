@@ -7,19 +7,19 @@
 ## @param commonLabels.app.kubernetes.io/name common Kubernetes app label
 ## @param commonLabels.app.kubernetes.io/component common Kubernetes app component
 commonLabels:
-  app.kubernetes.io/name: bull-exporter 
-  app.kubernetes.io/component: bull-exporter 
+  app.kubernetes.io/name: uptime-bot
+  app.kubernetes.io/component: uptime
 
-## @param labels.app Extra Labels to add to all deployed objects app
-## @param labels.role Extra Labels to add to all deployed objects role
-## @param labels.release require for prometheus label capture metrics
+## @param labels.app common app label
+## @param labels.role common role label
+## @param labels.release allow prometheus scrape metrics
 labels: 
-    app: bull
-    role: exporter
-    release: prometheus
+  app: uptime-bot
+  role: agent
+  release: prometheus
 
 ## @param nameOverride String to partially override common.names.fullname
-nameOverride: "" 
+nameOverride: "" # <please update>
 ##
 ## @section Common Parameters
 ##
@@ -31,8 +31,10 @@ nameOverride: ""
 image:
   pullPolicy: IfNotPresent
   registry: "registry.hub.docker.com" 
-  repository: "veriks/bull-exporter" 
-  tag: "v0.1.0" 
+  repository: "verik01/uptime-bot" 
+  tag: "v1.11.1"
+  # repository: "" # <please update>
+  # tag: "" # <please update>
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -49,34 +51,11 @@ image:
 ## @param replicas Number of Metrics Server replicas to deploy
 replicas: 1
 
-## @param automountServiceAccountToken auto mount service account token
-automountServiceAccountToken: false
-
-extraEnvVars:  # <please update>
-    # find the redis service in the cluster
-    ## @param extraEnvVars[0].name Redis uri to connect
-    ## @param extraEnvVars[0].value Redis uri to connect
-    ## @param extraEnvVars[1].name prefix for queues
-    ## @param extraEnvVars[1].value prefix for queues
-    ## @param extraEnvVars[2].name prefix for exported metrics
-    ## @param extraEnvVars[2].value prefix for exported metrics
-    ## @param extraEnvVars[3].name a space separated list of queues to check
-    ## @param extraEnvVars[3].value a space separated list of queues to check
-    ## @param extraEnvVars[4].name set to '0' or 'false' to disable queue discovery
-    ## @param extraEnvVars[4].value set to '0' or 'false' to disable queue discovery
-  - name: EXPORTER_REDIS_URL
-    value: redis://redis:6379/0
-  - name: EXPORTER_PREFIX
-    value: bull
-  - name: EXPORTER_STAT_PREFIX
-    value: bull_queue_
-    # space delimited list of queues
-  - name: EXPORTER_QUEUES
-    value: "mail job_one video audio"
-  - name: EXPORTER_AUTODISCOVER
-    value: ""
-## @param migrationArgs command arg for migration script
-migrationArgs: ["./migration"]
+## @param extraEnvVars[0].name Extra environments name
+## @param extraEnvVars[0].value Extra environments value
+extraEnvVars: 
+  - name: GET_HOSTS_FROM
+    value: dns
 
 ## @param configurations configmap configuration data
 configurations: []
@@ -153,7 +132,7 @@ affinity: {}
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
 nodeSelector: 
-  alpha.eksctl.io/nodegroup-name: "" # <please update>
+  alpha.eksctl.io/nodegroup-name: "please_update"
 
 ## @param tolerations Tolerations for pod assignment. Evaluated as a template.
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -167,15 +146,15 @@ tolerations: []
 ## @param extraVolumeMounts[0].name extra volume mounts name
 ## @param extraVolumeMounts[0].mountPath extra volume mounts path
 extraVolumeMounts:
-  - name: tmp
-    mountPath: /tmp
+  - name: uptime-bot
+    mountPath: /app/data
 ## @param extraVolumes[0].name extra volume name
 ## @param extraVolumes[0].emptyDir extra volume emptyDir definition
 extraVolumes:
-  - name: tmp
+  - name: extra-data
     emptyDir: {}
 
-## @param extraArgs additional arguments
+## @param extraArgs extra arguments pass to service container
 extraArgs: []
 
 ##
@@ -183,27 +162,37 @@ extraArgs: []
 ##
 
 ## @param containerPort Container port
-containerPort: 9538
+containerPort: 3001
 
 ## @param service.type Kubernetes service type
 ## @param service.labels Kubernetes service labels
 ## @param service.ports[0].name Kubernetes service for http port
 ## @param service.ports[0].port Kubernetes service port
 ## @param service.ports[0].targetPort Kubernetes service target container port
+## @param service.ports[1].name Kubernetes service for metric port
+## @param service.ports[1].port Kubernetes service port
+## @param service.ports[1].targetPort Kubernetes service target container port
+## @param service.ports[1].protocol Kubernetes service protocol is TCP
+## @param service.ports[2].name Kubernetes service for https port
+## @param service.ports[2].port Kubernetes service port
+## @param service.ports[2].targetPort Kubernetes service target container port
 ##
 service:
   ## Kubernetes service type and port number
   ##
   type: ClusterIP
   ports: 
-    - name: http-port
-      port: 9538
-      targetPort: 9538
-  ## @param service.annotations.prometheus.io/scrape is scrape
-  ## @param service.annotations.prometheus.io/port service port
-  annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/port: '9538'
+    - name: http
+      port: 80
+      targetPort: 3001
+    - name: metrics
+      protocol: TCP
+      port: 9913
+      targetPort: 3001
+    - name: https
+      port: 443
+      targetPort: 3001
+  # annotations:
   #   service.beta.kubernetes.io/aws-load-balancer-type: nlb
   #   # Note that the backend talks over HTTP.
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
@@ -230,10 +219,11 @@ service:
 ## @param ingress.path Kubernetes ingress path
 ## @param ingress.pathType Kubernetes ingress pathType
 ## @param ingress.tls Kubernetes ingress tls
+## @param ingress.hosts hosts list
 ingress:
   ## If true, VEriK Service Ingress will be created
   ##
-  enabled: false
+  enabled: true
 
   ## Annotations for VEriK Service Ingress
   ##
@@ -250,8 +240,8 @@ ingress:
   ## Hostnames.
   ## Must be provided if Ingress is enable.
   ##
-  # hosts:
-  #   - app.veriksystems.com
+  hosts:
+    - uptime.veriksystems.com
 
   ## Path for VEriK Service ingress
   path: /
@@ -283,7 +273,7 @@ resources:
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits: 
     cpu: 200m
-    memory: 512Mi
+    memory: 256Mi
   requests: 
     cpu: 100m
     memory: 128Mi
@@ -315,21 +305,17 @@ metrics:
     ## scrapeTimeout: 10s
     ##
     scrapeTimeout: ""
+    ## @param metrics.serviceMonitor.selector.app Prometheus instance selector labels
+    ## @param metrics.serviceMonitor.selector.role Prometheus instance selector labels
+    ## @param metrics.serviceMonitor.selector.release Prometheus instance selector labels
     ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
     ## e.g:
     ## selector:
     ##   prometheus: my-prometheus
     ##
-    ## @param metrics.serviceMonitor.selector.app app label
-    ## @param metrics.serviceMonitor.selector.app.kubernetes.io/component app.kubernetes.io/component label
-    ## @param metrics.serviceMonitor.selector.app.kubernetes.io/name app.kubernetes.io/name label
-    ## @param metrics.serviceMonitor.selector.role role label
-    ## @param metrics.serviceMonitor.selector.release release prometheus
-    selector:  # <please update if monitoring enabled
-      app: bull
-      app.kubernetes.io/component: bull-exporter
-      app.kubernetes.io/name: bull-exporter
-      role: exporter
+    selector: 
+      app: uptime-bot
+      role: agent
       release: prometheus
     ## @param metrics.serviceMonitor.metricRelabelings Specify Metric Relabellings to add to the scrape endpoint
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
@@ -346,7 +332,7 @@ metrics:
     jobLabel: ""
 
     ## @param metrics.serviceMonitor.port service monitor port mapping with Kubernetes service endpoint port
-    port: http-port
+    port: metrics
 
 ##
 ## @section Resource Healthz configuraiton Parameters
@@ -355,6 +341,85 @@ metrics:
 ## @param healthz.livenessProbe Kubernetes container livenessProbe
 ## @param healthz.readinessProbe Kubernetes container readinessProbe
 healthz:
-  startupProbe: /healthz
-  livenessProbe: /healthz
-  readinessProbe: /healthz
+  startupProbe: /status
+  livenessProbe: /status
+  readinessProbe: /status
+
+## @section Persistence Parameters
+
+## Persistence Parameters
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  ## @param persistence.enabled Enable persistence using Persistent Volume Claims
+  ##
+  enabled: true
+  ## @param persistence.storageClass Persistent Volume storage class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner
+  ##
+  storageClass: ""
+  ## @param persistence.accessModes [array] Persistent Volume access modes
+  ##
+  accessModes:
+    - ReadWriteOnce
+  ## @param persistence.accessMode Persistent Volume access mode (DEPRECATED: use `persistence.accessModes` instead)
+  ##
+  accessMode: ReadWriteOnce
+  ## @param persistence.size Persistent Volume size
+  ##
+  size: 2Gi
+  ## @param persistence.dataSource Custom PVC data source
+  ##
+  dataSource: {}
+  ## @param persistence.existingClaim The name of an existing PVC to use for persistence
+  ##
+  existingClaim: ""
+volumePermissions:
+  ## @param volumePermissions.enabled Enable init container that changes the owner/group of the PV mount point to `runAsUser:xxx`
+  ##
+  enabled: true
+  ## Bitnami Shell image
+  ## ref: https://hub.docker.com/r/bitnami/bitnami-shell/tags/
+  ## @param volumePermissions.image Bitnami Shell image registry
+  ## @param volumePermissions.imagePullPolicy Bitnami Shell image pull policy
+  ##
+  image: bitnami/bitnami-shell:10-debian-10-r299
+  imagePullPolicy: IfNotPresent
+   
+  ## Init container's resource requests and limits
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ## @param volumePermissions.resources.limits.cpu The resources limits cpu for the init container
+  ## @param volumePermissions.resources.limits.memory The resources limits memory for the init container
+  ## @param volumePermissions.resources.requests.cpu The requested resources cpu for the init container
+  ## @param volumePermissions.resources.requests.memory The requested resources memory for the init container
+  ##
+  resources:
+    limits: 
+      cpu: 200m
+      memory: 256Mi
+    requests: 
+      cpu: 100m
+      memory: 128Mi
+  ## Init container Container Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param volumePermissions.securityContext.runAsUser Set init container's Security Context runAsUser
+  ## NOTE: when runAsUser is set to special value "auto", init container will try to chown the
+  ##   data folder to auto-determined user&group, using commands: `id -u`:`id -G | cut -d" " -f2`
+  ##   "auto" is especially useful for OpenShift which has scc with dynamic user ids (and 0 is not allowed)
+  ##
+  securityContext:
+    runAsUser: 0
+  ## @param volumePermissions.servicePath Service data location, MUST eq with extraVolumeMounts mountPath
+  servicePath: "/app/data"
+
+  ## Provision config data
+  ## @param provisionData.image image registry
+  ## @param provisionData.imagePullPolicy image pull policy
+  ## @param provisionData.extraArgs extra arguments pass to service container
+  ##
+provisionData:
+  image: veriks/uptime-datasource:v0.1.1
+  imagePullPolicy: IfNotPresent
+  extraArgs: []

@@ -31,7 +31,7 @@ nameOverride: "" # <please update>
 image:
   pullPolicy: IfNotPresent
   registry: "registry.hub.docker.com" 
-  repository: "verik01/bull-exporter" 
+  repository: "veriks/bull-exporter" 
   tag: "v0.1.0" 
   # repository: "" # <please update>
   # tag: "" # <please update>
@@ -349,19 +349,25 @@ healthz:
 
 ##
 ## @section Resource Scaling configuraiton Parameters
+## ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 ##
-## @param scaling.enabled enable/disable KEDA scale based on SQS metrics
-## @param scaling.AWS_ACCESS_KEY_ID aws_access_key_id
-## @param scaling.AWS_SECRET_ACCESS_KEY aws_secret_access_key
-## @param scaling.policy.queueURL queueURL - Full URL for the SQS Queue.
-## @param scaling.policy.queueLength - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of scaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.
-## @param scaling.policy.awsRegion - AWS Region for the SQS Queue.
-scaling:
+## @param autoscaling.enabled enable/disable KEDA scale based on SQS metrics
+## @param autoscaling.AWS_ACCESS_KEY_ID aws_access_key_id
+## @param autoscaling.AWS_SECRET_ACCESS_KEY aws_secret_access_key
+## @param autoscaling.mode resource|queue. autoscaling by resource(cpu, memory) or queue length.
+## @param autoscaling.policy.queueURL queueURL - Full URL for the SQS Queue.
+## @param autoscaling.policy.queueLength - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of autoscaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.
+## @param autoscaling.policy.awsRegion - AWS Region for the SQS Queue.
+autoscaling:
   enabled: false
   AWS_ACCESS_KEY_ID: "please update your aws_access_key_id" 
   AWS_SECRET_ACCESS_KEY: "please update your aws_secret_access_key"
+  mode: resource # resource | queue
   policy:
     queueURL: "SQS queue name" 
     queueLength: "5"
     awsRegion: "eu-west-1"
-  
+    minReplicas: 1
+    maxReplicas: 10
+    targetCPU: 40
+    targetMemory: 50

@@ -7,17 +7,17 @@
             "properties": {
                 "app": {
                     "type": "string",
-                    "description": "Extra Labels to add to all deployed objects app",
-                    "default": "bull"
+                    "description": "common app label",
+                    "default": "uptime-bot"
                 },
                 "role": {
                     "type": "string",
-                    "description": "Extra Labels to add to all deployed objects role",
-                    "default": "exporter"
+                    "description": "common role label",
+                    "default": "agent"
                 },
                 "release": {
                     "type": "string",
-                    "description": "require for prometheus label capture metrics",
+                    "description": "allow prometheus scrape metrics",
                     "default": "prometheus"
                 }
             }
@@ -43,12 +43,12 @@
                 "repository": {
                     "type": "string",
                     "description": "image repository",
-                    "default": "veriks/bull-exporter"
+                    "default": "verik01/uptime-bot"
                 },
                 "tag": {
                     "type": "string",
                     "description": "image tag",
-                    "default": "v0.1.0"
+                    "default": "v1.11.1"
                 }
             }
         },
@@ -57,34 +57,22 @@
             "description": "Number of Metrics Server replicas to deploy",
             "default": 1
         },
-        "automountServiceAccountToken": {
-            "type": "boolean",
-            "description": "auto mount service account token",
-            "default": false
-        },
         "extraEnvVars": {
             "type": "array",
-            "description": "Redis uri to connect",
+            "description": "Extra environments name",
             "items": {
                 "type": "object",
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "set to '0' or 'false' to disable queue discovery"
+                        "description": "Extra environments name"
                     },
                     "value": {
                         "type": "string",
-                        "description": "set to '0' or 'false' to disable queue discovery"
+                        "description": "Extra environments value"
                     }
                 }
             }
-        },
-        "migrationArgs": {
-            "type": "array",
-            "description": "command arg for migration script",
-            "default": [
-                "./migration"
-            ]
         },
         "configurations": {
             "type": "array",
@@ -197,13 +185,13 @@
         },
         "extraArgs": {
             "type": "array",
-            "description": "additional arguments",
+            "description": "extra arguments pass to service container",
             "default": []
         },
         "containerPort": {
             "type": "number",
             "description": "Container port",
-            "default": 9538
+            "default": 3001
         },
         "service": {
             "type": "object",
@@ -226,7 +214,7 @@
                         "properties": {
                             "name": {
                                 "type": "string",
-                                "description": "Kubernetes service for http port"
+                                "description": "Kubernetes service for https port"
                             },
                             "port": {
                                 "type": "number",
@@ -235,6 +223,10 @@
                             "targetPort": {
                                 "type": "number",
                                 "description": "Kubernetes service target container port"
+                            },
+                            "protocol": {
+                                "type": "string",
+                                "description": "Kubernetes service protocol is TCP"
                             }
                         }
                     }
@@ -247,7 +239,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Kubernetes ingress enabled",
-                    "default": false
+                    "default": true
                 },
                 "labels": {
                     "type": "object",
@@ -273,6 +265,13 @@
                     "type": "array",
                     "description": "Kubernetes ingress tls",
                     "default": []
+                },
+                "hosts": {
+                    "type": "array",
+                    "description": "hosts list",
+                    "default": [
+                        "uptime.veriksystems.com"
+                    ]
                 }
             }
         },
@@ -290,7 +289,7 @@
                         "memory": {
                             "type": "string",
                             "description": "Kubernetes resources limit memory configure",
-                            "default": "512Mi"
+                            "default": "256Mi"
                         }
                     }
                 },
@@ -347,17 +346,17 @@
                             "properties": {
                                 "app": {
                                     "type": "string",
-                                    "description": "app label",
-                                    "default": "bull"
+                                    "description": "Prometheus instance selector labels",
+                                    "default": "uptime-bot"
                                 },
                                 "role": {
                                     "type": "string",
-                                    "description": "role label",
-                                    "default": "exporter"
+                                    "description": "Prometheus instance selector labels",
+                                    "default": "agent"
                                 },
                                 "release": {
                                     "type": "string",
-                                    "description": "release prometheus",
+                                    "description": "Prometheus instance selector labels",
                                     "default": "prometheus"
                                 }
                             }
@@ -385,7 +384,7 @@
                         "port": {
                             "type": "string",
                             "description": "service monitor port mapping with Kubernetes service endpoint port",
-                            "default": "http-port"
+                            "default": "metrics"
                         }
                     }
                 }
@@ -397,17 +396,149 @@
                 "startupProbe": {
                     "type": "string",
                     "description": "Kubernetes container startupProbe",
-                    "default": "/healthz"
+                    "default": "/status"
                 },
                 "livenessProbe": {
                     "type": "string",
                     "description": "Kubernetes container livenessProbe",
-                    "default": "/healthz"
+                    "default": "/status"
                 },
                 "readinessProbe": {
                     "type": "string",
                     "description": "Kubernetes container readinessProbe",
-                    "default": "/healthz"
+                    "default": "/status"
+                }
+            }
+        },
+        "persistence": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable persistence using Persistent Volume Claims",
+                    "default": true
+                },
+                "storageClass": {
+                    "type": "string",
+                    "description": "Persistent Volume storage class",
+                    "default": ""
+                },
+                "accessModes": {
+                    "type": "array",
+                    "description": "Persistent Volume access modes",
+                    "default": [
+                        "ReadWriteOnce"
+                    ]
+                },
+                "accessMode": {
+                    "type": "string",
+                    "description": "Persistent Volume access mode (DEPRECATED: use `persistence.accessModes` instead)",
+                    "default": "ReadWriteOnce"
+                },
+                "size": {
+                    "type": "string",
+                    "description": "Persistent Volume size",
+                    "default": "10Gi"
+                },
+                "dataSource": {
+                    "type": "object",
+                    "description": "Custom PVC data source",
+                    "default": {}
+                },
+                "existingClaim": {
+                    "type": "string",
+                    "description": "The name of an existing PVC to use for persistence",
+                    "default": ""
+                }
+            }
+        },
+        "volumePermissions": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable init container that changes the owner/group of the PV mount point to `runAsUser:xxx`",
+                    "default": true
+                },
+                "image": {
+                    "type": "string",
+                    "description": "Bitnami Shell image registry",
+                    "default": "bitnami/bitnami-shell:10-debian-10-r299"
+                },
+                "imagePullPolicy": {
+                    "type": "string",
+                    "description": "Bitnami Shell image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "resources": {
+                    "type": "object",
+                    "properties": {
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "type": "string",
+                                    "description": "The resources limits cpu for the init container",
+                                    "default": "200m"
+                                },
+                                "memory": {
+                                    "type": "string",
+                                    "description": "The resources limits memory for the init container",
+                                    "default": "256Mi"
+                                }
+                            }
+                        },
+                        "requests": {
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "type": "string",
+                                    "description": "The requested resources cpu for the init container",
+                                    "default": "100m"
+                                },
+                                "memory": {
+                                    "type": "string",
+                                    "description": "The requested resources memory for the init container",
+                                    "default": "128Mi"
+                                }
+                            }
+                        }
+                    }
+                },
+                "securityContext": {
+                    "type": "object",
+                    "properties": {
+                        "runAsUser": {
+                            "type": "number",
+                            "description": "Set init container's Security Context runAsUser",
+                            "default": 0
+                        }
+                    }
+                },
+                "servicePath": {
+                    "type": "string",
+                    "description": "Service data location, MUST eq with extraVolumeMounts mountPath",
+                    "default": "/app/data"
+                }
+            }
+        },
+        "provisionData": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "string",
+                    "description": "image registry",
+                    "default": "veriks/uptime-datasource:v0.1.1"
+                },
+                "imagePullPolicy": {
+                    "type": "string",
+                    "description": "image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "extraArgs": {
+                    "type": "array",
+                    "description": "extra arguments pass to service container",
+                    "default": []
                 }
             }
         }
