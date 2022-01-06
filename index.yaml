@@ -5,6 +5,31 @@ entries:
       category: Application
     apiVersion: v2
     appVersion: 1.0.1
+    created: "2022-01-06T16:10:10.64345833Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for Prometheus Bulljs exporter
+    digest: 66fd824cf10432ca5d1988e0a4281b392df4586739fe7fce2d27a061074ec219
+    keywords:
+    - VEriK
+    - Application
+    - Prometheus
+    - Bulljs
+    - exporter
+    name: bull-exporter
+    sources:
+    - https://github.com/UpHabit/bull_exporter
+    urls:
+    - https://github.com/veriks/charts/releases/download/bull-exporter-1.0.6/bull-exporter-1.0.6.tgz
+    version: 1.0.6
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.1
     created: "2021-12-23T05:31:27.944231958Z"
     dependencies:
     - name: common
@@ -332,7 +357,55 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/prometheus-federation-1.0.0/prometheus-federation-1.0.0.tgz
     version: 1.0.0
+  uptime-bot:
+  - annotations:
+      category: Monitoring
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-01-06T16:10:10.841131715Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for health check VEriK services
+    digest: 2a4acf1300bb6a562ef864d63286556c728e36bd9af25b9156868380fe78d278
+    keywords:
+    - VEriK
+    - Monitoring
+    - Health check
+    - Services
+    name: uptime-bot
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/veriks/charts/releases/download/uptime-bot-1.0.1/uptime-bot-1.0.1.tgz
+    version: 1.0.1
   verik-service:
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-01-06T16:10:11.002046102Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init VEriK services
+    digest: ccd981bdf16f6a730a379425f7fd3bac233328a710330c3202e74392642c0c2b
+    keywords:
+    - VEriK
+    - Application
+    - Services
+    name: verik-service
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/veriks/charts/releases/download/verik-service-1.3.1/verik-service-1.3.1.tgz
+    version: 1.3.1
   - annotations:
       category: Application
     apiVersion: v2
@@ -586,4 +659,4 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/verik-service-1.0.0/verik-service-1.0.0.tgz
     version: 1.0.0
-generated: "2022-01-02T23:13:12.743554516Z"
+generated: "2022-01-06T16:10:11.008943595Z"
