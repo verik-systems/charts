@@ -47,7 +47,7 @@ spec:
           key: password
         username:
           name: {{ .Values.labels.app }}-basic-auth
-          key: user
+          key: username
       {{- end }}  
   namespaceSelector:
     matchNames:

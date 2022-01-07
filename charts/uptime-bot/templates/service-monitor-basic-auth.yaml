@@ -4,7 +4,7 @@ kind: Secret
 metadata:
   name: {{ .Values.labels.app }}-basic-auth
 data:
-  password: {{ .Values.metrics.serviceMonitor.basicAuth.user | b64enc }}
-  user: {{ .Values.metrics.serviceMonitor.basicAuth.password | b64enc }}
+  username: {{ .Values.metrics.serviceMonitor.basicAuth.username | b64enc }}
+  password: {{ .Values.metrics.serviceMonitor.basicAuth.password | b64enc }}
 type: Opaque
 {{- end }}

@@ -334,7 +334,7 @@
                                     "description": "enable basic-auth for metrics endpoint",
                                     "default": true
                                 },
-                                "user": {
+                                "username": {
                                     "type": "string",
                                     "description": "username",
                                     "default": ""

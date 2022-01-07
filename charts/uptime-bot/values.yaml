@@ -290,11 +290,11 @@ metrics:
     ##
     enabled: true
     ## @param metrics.serviceMonitor.basicAuth.enabled enable basic-auth for metrics endpoint
-    ## @param metrics.serviceMonitor.basicAuth.user username
+    ## @param metrics.serviceMonitor.basicAuth.username username
     ## @param metrics.serviceMonitor.basicAuth.password password
     basicAuth:
       enabled: true
-      user: ""
+      username: ""
       password: ""
     ## @param metrics.serviceMonitor.namespace Namespace in which Prometheus is running
     ##

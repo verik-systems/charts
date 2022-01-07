@@ -153,7 +153,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `metrics.enabled`                           | Enable the export of Prometheus metrics                                                                | `true`       |
 | `metrics.serviceMonitor.enabled`            | if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`) | `true`       |
 | `metrics.serviceMonitor.basicAuth.enabled`  | enable basic-auth for metrics endpoint                                                                 | `true`       |
-| `metrics.serviceMonitor.basicAuth.user`     | username                                                                                               | `""`         |
+| `metrics.serviceMonitor.basicAuth.username` | username                                                                                               | `""`         |
 | `metrics.serviceMonitor.basicAuth.password` | password                                                                                               | `""`         |
 | `metrics.serviceMonitor.namespace`          | Namespace in which Prometheus is running                                                               | `""`         |
 | `metrics.serviceMonitor.interval`           | Interval at which metrics should be scraped.                                                           | `""`         |
