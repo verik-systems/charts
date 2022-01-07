@@ -362,6 +362,30 @@ entries:
       category: Monitoring
     apiVersion: v2
     appVersion: 1.0.0
+    created: "2022-01-07T08:26:48.518341629Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for health check VEriK services
+    digest: b2ea42763c1e2934330cf6a2411186b52310ff8fe27957ef44b17b3f0ee47533
+    keywords:
+    - VEriK
+    - Monitoring
+    - Health check
+    - Services
+    name: uptime-bot
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/veriks/charts/releases/download/uptime-bot-1.1.3/uptime-bot-1.1.3.tgz
+    version: 1.1.3
+  - annotations:
+      category: Monitoring
+    apiVersion: v2
+    appVersion: 1.0.0
     created: "2022-01-07T07:50:59.847265996Z"
     dependencies:
     - name: common
@@ -730,4 +754,4 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/verik-service-1.0.0/verik-service-1.0.0.tgz
     version: 1.0.0
-generated: "2022-01-07T07:50:59.961854216Z"
+generated: "2022-01-07T08:26:48.518439831Z"
