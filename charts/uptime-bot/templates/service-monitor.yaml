@@ -42,12 +42,12 @@ spec:
       {{- end }}
       {{- if .Values.metrics.serviceMonitor.basicAuth.enabled }}
       basicAuth:
-      password:
-        name: {{ .Values.labels.app }}-basic-auth
-        key: password
-      username:
-        name: {{ .Values.labels.app }}-basic-auth
-        key: user
+        password:
+          name: {{ .Values.labels.app }}-basic-auth
+          key: password
+        username:
+          name: {{ .Values.labels.app }}-basic-auth
+          key: user
       {{- end }}  
   namespaceSelector:
     matchNames:
