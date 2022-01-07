@@ -94,13 +94,13 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Storage configuration Parameters
 
-| Name                             | Description                               | Value          |
-| -------------------------------- | ----------------------------------------- | -------------- |
+| Name                             | Description                               | Value        |
+| -------------------------------- | ----------------------------------------- | ------------ |
 | `extraVolumeMounts[0].name`      | extra volume mounts name                  | `uptime-bot` |
-| `extraVolumeMounts[0].mountPath` | extra volume mounts path                  | `/app/data`    |
-| `extraVolumes[0].name`           | extra volume name                         | `uptime-bot` |
-| `extraVolumes[0].emptyDir`       | extra volume emptyDir definition          | `{}`           |
-| `extraArgs`                      | extra arguments pass to service container | `[]`           |
+| `extraVolumeMounts[0].mountPath` | extra volume mounts path                  | `/app/data`  |
+| `extraVolumes[0].name`           | extra volume name                         | `extra-data` |
+| `extraVolumes[0].emptyDir`       | extra volume emptyDir definition          | `{}`         |
+| `extraArgs`                      | extra arguments pass to service container | `[]`         |
 
 
 ### Service configuration Parameters
@@ -148,21 +148,24 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Metric configuraiton Parameters
 
-| Name                                       | Description                                                                                            | Value        |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------ |
-| `metrics.enabled`                          | Enable the export of Prometheus metrics                                                                | `true`       |
-| `metrics.serviceMonitor.enabled`           | if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`) | `true`       |
-| `metrics.serviceMonitor.namespace`         | Namespace in which Prometheus is running                                                               | `""`         |
-| `metrics.serviceMonitor.interval`          | Interval at which metrics should be scraped.                                                           | `""`         |
-| `metrics.serviceMonitor.scrapeTimeout`     | Timeout after which the scrape is ended                                                                | `""`         |
-| `metrics.serviceMonitor.selector.app`      | Prometheus instance selector labels                                                                    | `uptime-bot` |
-| `metrics.serviceMonitor.selector.role`     | Prometheus instance selector labels                                                                    | `agent`      |
-| `metrics.serviceMonitor.selector.release`  | Prometheus instance selector labels                                                                    | `prometheus` |
-| `metrics.serviceMonitor.metricRelabelings` | Specify Metric Relabellings to add to the scrape endpoint                                              | `[]`         |
-| `metrics.serviceMonitor.honorLabels`       | Labels to honor to add to the scrape endpoint                                                          | `false`      |
-| `metrics.serviceMonitor.additionalLabels`  | Additional custom labels for the ServiceMonitor                                                        | `{}`         |
-| `metrics.serviceMonitor.jobLabel`          | The name of the label on the target service to use as the job name in prometheus.                      | `""`         |
-| `metrics.serviceMonitor.port`              | service monitor port mapping with Kubernetes service endpoint port                                     | `metrics`    |
+| Name                                        | Description                                                                                            | Value        |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------ |
+| `metrics.enabled`                           | Enable the export of Prometheus metrics                                                                | `true`       |
+| `metrics.serviceMonitor.enabled`            | if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`) | `true`       |
+| `metrics.serviceMonitor.basicAuth.enabled`  | enable basic-auth for metrics endpoint                                                                 | `true`       |
+| `metrics.serviceMonitor.basicAuth.user`     | username                                                                                               | `""`         |
+| `metrics.serviceMonitor.basicAuth.password` | password                                                                                               | `""`         |
+| `metrics.serviceMonitor.namespace`          | Namespace in which Prometheus is running                                                               | `""`         |
+| `metrics.serviceMonitor.interval`           | Interval at which metrics should be scraped.                                                           | `""`         |
+| `metrics.serviceMonitor.scrapeTimeout`      | Timeout after which the scrape is ended                                                                | `""`         |
+| `metrics.serviceMonitor.selector.app`       | Prometheus instance selector labels                                                                    | `uptime-bot` |
+| `metrics.serviceMonitor.selector.role`      | Prometheus instance selector labels                                                                    | `agent`      |
+| `metrics.serviceMonitor.selector.release`   | Prometheus instance selector labels                                                                    | `prometheus` |
+| `metrics.serviceMonitor.metricRelabelings`  | Specify Metric Relabellings to add to the scrape endpoint                                              | `[]`         |
+| `metrics.serviceMonitor.honorLabels`        | Labels to honor to add to the scrape endpoint                                                          | `false`      |
+| `metrics.serviceMonitor.additionalLabels`   | Additional custom labels for the ServiceMonitor                                                        | `{}`         |
+| `metrics.serviceMonitor.jobLabel`           | The name of the label on the target service to use as the job name in prometheus.                      | `""`         |
+| `metrics.serviceMonitor.port`               | service monitor port mapping with Kubernetes service endpoint port                                     | `metrics`    |
 
 
 ### Resource Healthz configuraiton Parameters
@@ -182,7 +185,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `persistence.storageClass`                    | Persistent Volume storage class                                                             | `""`                                      |
 | `persistence.accessModes`                     | Persistent Volume access modes                                                              | `[]`                                      |
 | `persistence.accessMode`                      | Persistent Volume access mode (DEPRECATED: use `persistence.accessModes` instead)           | `ReadWriteOnce`                           |
-| `persistence.size`                            | Persistent Volume size                                                                      | `10Gi`                                    |
+| `persistence.size`                            | Persistent Volume size                                                                      | `2Gi`                                     |
 | `persistence.dataSource`                      | Custom PVC data source                                                                      | `{}`                                      |
 | `persistence.existingClaim`                   | The name of an existing PVC to use for persistence                                          | `""`                                      |
 | `volumePermissions.enabled`                   | Enable init container that changes the owner/group of the PV mount point to `runAsUser:xxx` | `true`                                    |
@@ -194,7 +197,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `volumePermissions.resources.requests.memory` | The requested resources memory for the init container                                       | `128Mi`                                   |
 | `volumePermissions.securityContext.runAsUser` | Set init container's Security Context runAsUser                                             | `0`                                       |
 | `volumePermissions.servicePath`               | Service data location, MUST eq with extraVolumeMounts mountPath                             | `/app/data`                               |
-| `provisionData.image`                         | image registry                                                                              | `veriks/uptime-datasource:v0.1.1`      |
+| `provisionData.image`                         | image registry                                                                              | `veriks/uptime-datasource:v0.1.1`         |
 | `provisionData.imagePullPolicy`               | image pull policy                                                                           | `IfNotPresent`                            |
 | `provisionData.extraArgs`                     | extra arguments pass to service container                                                   | `[]`                                      |
 

@@ -290,6 +290,13 @@ metrics:
     ## @param metrics.serviceMonitor.enabled if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)
     ##
     enabled: true
+    ## @param metrics.serviceMonitor.basicAuth.enabled enable basic-auth for metrics endpoint
+    ## @param metrics.serviceMonitor.basicAuth.user username
+    ## @param metrics.serviceMonitor.basicAuth.password password
+    basicAuth:
+      enabled: true
+      user: ""
+      password: ""
     ## @param metrics.serviceMonitor.namespace Namespace in which Prometheus is running
     ##
     namespace: ""

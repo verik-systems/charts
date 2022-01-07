@@ -326,6 +326,26 @@
                             "description": "if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)",
                             "default": true
                         },
+                        "basicAuth": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "enable basic-auth for metrics endpoint",
+                                    "default": true
+                                },
+                                "user": {
+                                    "type": "string",
+                                    "description": "username",
+                                    "default": ""
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "description": "password",
+                                    "default": ""
+                                }
+                            }
+                        },
                         "namespace": {
                             "type": "string",
                             "description": "Namespace in which Prometheus is running",
@@ -438,7 +458,7 @@
                 "size": {
                     "type": "string",
                     "description": "Persistent Volume size",
-                    "default": "10Gi"
+                    "default": "2Gi"
                 },
                 "dataSource": {
                     "type": "object",
