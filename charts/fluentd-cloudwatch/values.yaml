@@ -57,8 +57,8 @@ daemonSet:
 
 ## @param configMap.clusterInfo.cluster.name cluster name
 ## @param configMap.clusterInfo.logs.region region logs
-## @param configMap.data.fluentConfig config of fluentd
-## @param configMap.data.containerConfig config of fluentd
+## @param configMap.data.fluent.conf config of fluentd
+## @param configMap.data.containers.conf config of fluentd
 ## @param configMap.data.systemd.conf config of fluentd
 ## @param configMap.data.host.conf config of fluentd
 configMap:
@@ -66,7 +66,7 @@ configMap:
     cluster.name: "" # <please input cluster name>
     logs.region:  "" # <please input logs region>
   data:
-    fluentConfig: |
+    fluent.conf: |
       @include containers.conf
       @include systemd.conf
       @include host.conf
@@ -74,7 +74,7 @@ configMap:
       <match fluent.**>
         @type null
       </match>
-    containerConfig:  |
+    containers.conf:  |
       <source>
         @type tail
         @id in_tail_container_logs
