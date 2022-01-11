@@ -223,6 +223,29 @@ entries:
       category: Logging
     apiVersion: v2
     appVersion: 1.0.0
+    created: "2022-01-11T06:34:12.764204936Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure send logs to CloudWatch Logs
+    digest: dfc32ff06378fcadeb3c5ddf55313896fe14f62631de3055fc6bca5bb95de6d1
+    keywords:
+    - CloudWatch
+    - logging
+    - fluentd
+    name: fluentd-cloudwatch
+    sources:
+    - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html
+    urls:
+    - https://github.com/veriks/charts/releases/download/fluentd-cloudwatch-1.0.2/fluentd-cloudwatch-1.0.2.tgz
+    version: 1.0.2
+  - annotations:
+      category: Logging
+    apiVersion: v2
+    appVersion: 1.0.0
     created: "2021-12-23T05:31:28.203062586Z"
     dependencies:
     - name: common
@@ -801,4 +824,4 @@ entries:
     urls:
     - https://github.com/veriks/charts/releases/download/verik-service-1.0.0/verik-service-1.0.0.tgz
     version: 1.0.0
-generated: "2022-01-07T09:02:32.230537827Z"
+generated: "2022-01-11T06:34:12.76449154Z"
