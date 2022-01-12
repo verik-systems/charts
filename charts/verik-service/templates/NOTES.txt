@@ -49,20 +49,4 @@ To access your service site from outside the cluster follow the steps below:
 
 2. Open a browser and access Site using the obtained URL.
 
-{{- if .Values.metrics.enabled }}
-
-You can access Prometheus metrics exporter following the steps below:
-
-{{- if and .Values.metrics.service .Values.metrics.service.port }}
-
-1. Get the Prometheus metrics exporter URL by running:
-
-    kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ printf "%s-metrics" (.Values.labels.app) }} {{ .Values.metrics.service.port }}:{{ .Values.metrics.service.port }} &
-    echo "Prometheus metrics exporter URL: http://127.0.0.1:{{ .Values.metrics.service.port }}/metrics"
-
-2. Open a browser and access Prometheus metrics exporter using the obtained URL.
-
-{{- end }}
-
-{{- end }}
 {{- end }}
