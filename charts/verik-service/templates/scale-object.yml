@@ -1,5 +1,5 @@
 {{- if .Values.autoscaling.enabled }}
-{{- if eq .Values.autoscaling.enabled .Values.autoscaling.mode "queue" }}
+{{- if eq .Values.autoscaling.mode "queue" }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:

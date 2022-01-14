@@ -1,5 +1,5 @@
 {{- if .Values.autoscaling.enabled }}
-{{- if eq .Values.autoscaling.enabled .Values.autoscaling.mode "resource" }}
+{{- if eq .Values.autoscaling.mode "resource" }}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
