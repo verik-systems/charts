@@ -374,4 +374,4 @@ autoscaling:
     minReplicas: 1
     maxReplicas: 10
     targetCPU: 40
-    targetMemory: 50
+    targetMemory: 80
