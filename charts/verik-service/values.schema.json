@@ -417,13 +417,13 @@
                 }
             }
         },
-        "scaling": {
+        "autoscaling": {
             "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean",
                     "description": "enable/disable KEDA scale based on SQS metrics",
-                    "default": false
+                    "default": true
                 },
                 "AWS_ACCESS_KEY_ID": {
                     "type": "string",
@@ -435,6 +435,11 @@
                     "description": "aws_secret_access_key",
                     "default": "please update your aws_secret_access_key"
                 },
+                "mode": {
+                    "type": "string",
+                    "description": "resource|queue. autoscaling by resource(cpu, memory) or queue length.",
+                    "default": "resource"
+                },
                 "policy": {
                     "type": "object",
                     "properties": {
@@ -445,13 +450,33 @@
                         },
                         "queueLength": {
                             "type": "string",
-                            "description": "- Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of scaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.",
+                            "description": "- Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of autoscaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.",
                             "default": "5"
                         },
                         "awsRegion": {
                             "type": "string",
                             "description": "- AWS Region for the SQS Queue.",
                             "default": "eu-west-1"
+                        },
+                        "minReplicas": {
+                            "type": "number",
+                            "description": "- min relpicas",
+                            "default": 1
+                        },
+                        "maxReplicas": {
+                            "type": "number",
+                            "description": "- max relpicas",
+                            "default": 10
+                        },
+                        "targetCPU": {
+                            "type": "number",
+                            "description": "- cpu percent threshold",
+                            "default": 40
+                        },
+                        "targetMemory": {
+                            "type": "number",
+                            "description": "- Memory percent threshold",
+                            "default": 50
                         }
                     }
                 }
