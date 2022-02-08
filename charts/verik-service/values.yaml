@@ -375,3 +375,14 @@ autoscaling:
     maxReplicas: 10
     targetCPU: 40
     targetMemory: 80
+
+##
+## @section Security Context Parameters
+##
+## @param securityContext.readOnlyRootFilesystem - set file system is readonly
+## @param securityContext.runAsNonRoot - run as a noon root user
+## @param securityContext.runAsUser - run as a specific user by rule
+securityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000

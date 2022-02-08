@@ -143,9 +143,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 | Name                        | Description                                    | Value   |
 | --------------------------- | ---------------------------------------------- | ------- |
-| `resources.limits.cpu`      | Kubernetes resources limit cpu configure       | `500m`  |
+| `resources.limits.cpu`      | Kubernetes resources limit cpu configure       | `250m`  |
 | `resources.limits.memory`   | Kubernetes resources limit memory configure    | `512Mi` |
-| `resources.requests.cpu`    | Kubernetes resources requests cpu configure    | `250m`  |
+| `resources.requests.cpu`    | Kubernetes resources requests cpu configure    | `100m`  |
 | `resources.requests.memory` | Kubernetes resources requests memory configure | `256Mi` |
 
 
@@ -189,6 +189,15 @@ The command removes all the Kubernetes components associated with the chart and 
 | `autoscaling.policy.minReplicas`    | - min relpicas                                                                                                                                                                                                                                                                                                                                                                                                                                    | `1`                                        |
 | `autoscaling.policy.maxReplicas`    | - max relpicas                                                                                                                                                                                                                                                                                                                                                                                                                                    | `10`                                       |
 | `autoscaling.policy.targetCPU`      | - cpu percent threshold                                                                                                                                                                                                                                                                                                                                                                                                                           | `40`                                       |
-| `autoscaling.policy.targetMemory`   | - Memory percent threshold                                                                                                                                                                                                                                                                                                                                                                                                                        | `50`                                       |
+| `autoscaling.policy.targetMemory`   | - Memory percent threshold                                                                                                                                                                                                                                                                                                                                                                                                                        | `80`                                       |
+
+
+### Security Context Parameters
+
+| Name                                     | Description                      | Value  |
+| ---------------------------------------- | -------------------------------- | ------ |
+| `securityContext.readOnlyRootFilesystem` | - set file system is readonly    | `true` |
+| `securityContext.runAsNonRoot`           | - run as a noon root user        | `true` |
+| `securityContext.runAsUser`              | - run as a specific user by rule | `1000` |
 
 

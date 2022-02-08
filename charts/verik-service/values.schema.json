@@ -306,7 +306,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Kubernetes resources limit cpu configure",
-                            "default": "500m"
+                            "default": "250m"
                         },
                         "memory": {
                             "type": "string",
@@ -321,7 +321,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Kubernetes resources requests cpu configure",
-                            "default": "250m"
+                            "default": "100m"
                         },
                         "memory": {
                             "type": "string",
@@ -476,9 +476,29 @@
                         "targetMemory": {
                             "type": "number",
                             "description": "- Memory percent threshold",
-                            "default": 50
+                            "default": 80
                         }
                     }
+                }
+            }
+        },
+        "securityContext": {
+            "type": "object",
+            "properties": {
+                "readOnlyRootFilesystem": {
+                    "type": "boolean",
+                    "description": "- set file system is readonly",
+                    "default": true
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "- run as a noon root user",
+                    "default": true
+                },
+                "runAsUser": {
+                    "type": "number",
+                    "description": "- run as a specific user by rule",
+                    "default": 1000
                 }
             }
         }
