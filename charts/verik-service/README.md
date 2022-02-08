@@ -1,7 +1,7 @@
 
 ## VEriK Service Helm Chart
 
-This chart bootstraps a VEriK cloud application deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a VEriK cloud application deployment (https://charts.veriksystems.com) on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## TL;DR
 ```
