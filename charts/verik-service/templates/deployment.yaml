@@ -9,6 +9,7 @@ metadata:
     {{- if .Values.labels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.labels "context" $ ) | nindent 4 }}
     {{- end }}
+      app-version: {{ .Values.image.tag}}
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.replicas }}
