@@ -43,12 +43,12 @@
                 "repository": {
                     "type": "string",
                     "description": "image repository",
-                    "default": "veriks/bull-exporter"
+                    "default": "busybox"
                 },
                 "tag": {
                     "type": "string",
                     "description": "image tag",
-                    "default": "v0.1.0"
+                    "default": "stable"
                 }
             }
         },
@@ -56,6 +56,23 @@
             "type": "number",
             "description": "Number of Metrics Server replicas to deploy",
             "default": 2
+        },
+        "defaultEnvVars": {
+            "type": "array",
+            "description": "default environments name",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "default environments name"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "default environments value"
+                    }
+                }
+            }
         },
         "extraEnvVars": {
             "type": "array",
@@ -70,6 +87,23 @@
                     "value": {
                         "type": "string",
                         "description": "Extra environments value"
+                    }
+                }
+            }
+        },
+        "inputEnvVars": {
+            "type": "array",
+            "description": "input environments name",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "input environments name"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "input environments value"
                     }
                 }
             }

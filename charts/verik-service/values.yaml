@@ -51,11 +51,24 @@ image:
 ## @param replicas Number of Metrics Server replicas to deploy
 replicas: 2
 
+
+## @param defaultEnvVars[0].name default environments name
+## @param defaultEnvVars[0].value default environments value
+defaultEnvVars: 
+  - name: GET_HOSTS_FROM
+    value: dns
+
 ## @param extraEnvVars[0].name Extra environments name
 ## @param extraEnvVars[0].value Extra environments value
 extraEnvVars: 
   - name: GET_HOSTS_FROM
     value: dns
+## @param inputEnvVars[0].name input environments name
+## @param inputEnvVars[0].value input environments value
+inputEnvVars: 
+  - name: GET_HOSTS_FROM
+    value: dns
+
 ## @param migration.enabled migration script enabled
 ## @param migration.skip migration script skip
 ## @param migration.migrationArgs command arg for migration script

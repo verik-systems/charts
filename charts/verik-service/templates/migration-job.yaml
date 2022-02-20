@@ -32,8 +32,14 @@ spec:
           args: {{ .Values.migration.migrationArgs }}
           {{- end }}
           env:
+            {{- if .Values.defaultEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.defaultEnvVars "context" $) | nindent 12 }}
+            {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+            {{- if .Values.inputEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.inputEnvVars "context" $) | nindent 12 }}
             {{- end }}
       restartPolicy: Never
   backoffLimit: 1

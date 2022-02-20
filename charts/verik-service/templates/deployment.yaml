@@ -67,8 +67,14 @@ spec:
           {{- end }}
           {{- end }}
           env:
+            {{- if .Values.defaultEnvVars }}
+            {{toYaml .Values.defaultEnvVars  | nindent 12 }}
+            {{- end }}
             {{- if .Values.extraEnvVars }}
             {{toYaml .Values.extraEnvVars  | nindent 12 }}
+            {{- end }}
+            {{- if .Values.inputEnvVars }}
+            {{toYaml .Values.inputEnvVars  | nindent 12 }}
             {{- end }}
           ports:
             - name: http-port
