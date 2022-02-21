@@ -1,6 +1,150 @@
 apiVersion: v1
 entries:
+  bull-exporter:
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-02-21T07:23:02.064035339Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for Prometheus Bulljs exporter
+    digest: 6c86132aaf2a8808171149ddad4d3730dbfacfb64cd340e087c2a2f656c85d47
+    keywords:
+    - VEriK
+    - Application
+    - Prometheus
+    - Bulljs
+    - exporter
+    name: bull-exporter
+    sources:
+    - https://github.com/UpHabit/bull_exporter
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/bull-exporter-1.0.8/bull-exporter-1.0.8.tgz
+    version: 1.0.8
+  cluster-reader:
+  - annotations:
+      category: Authorization
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-02-21T07:23:02.22986478Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init cluster reader account
+    digest: eea4e9f9b965512297ffde9240f2f413197df16f17a09094ac538423b4feba47
+    keywords:
+    - rbac
+    - cluster reader
+    name: cluster-reader
+    sources:
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/cluster-reader-1.0.3/cluster-reader-1.0.3.tgz
+    version: 1.0.3
+  fluentd-cloudwatch:
+  - annotations:
+      category: Logging
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-02-21T07:23:02.398054369Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure send logs to CloudWatch Logs
+    digest: 2f5ee1f39d393eb672053d1be8d605c3a4eed1d5b16ee754a14da6bff8e8de02
+    keywords:
+    - CloudWatch
+    - logging
+    - fluentd
+    name: fluentd-cloudwatch
+    sources:
+    - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/fluentd-cloudwatch-1.0.4/fluentd-cloudwatch-1.0.4.tgz
+    version: 1.0.4
+  namespace-reader:
+  - annotations:
+      category: Authorization
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-02-21T07:23:02.57379821Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init namespace reader account
+    digest: 6a67a4a06afea169f2367968d42f75905fdd200e4b4de28b39230a36a58462b4
+    keywords:
+    - rbac
+    - namespace reader
+    name: namespace-reader
+    sources:
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/namespace-reader-1.0.3/namespace-reader-1.0.3.tgz
+    version: 1.0.3
+  prometheus-federation:
+  - annotations:
+      category: Monitoring
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-02-21T07:23:02.745855377Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure prometheus federation
+    digest: 4e47c38339cc0723f2dc1df78636a90d31e36d289c42cd26df59663fcd4c9ed5
+    keywords:
+    - prometheus
+    - federation
+    - authorization
+    name: prometheus-federation
+    sources:
+    - https://prometheus.io/docs/prometheus/latest/federation
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/prometheus-federation-1.0.3/prometheus-federation-1.0.3.tgz
+    version: 1.0.3
   uptime-bot:
+  - annotations:
+      category: Monitoring
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-02-21T07:23:02.908988364Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for health check VEriK services
+    digest: a845b6c3429ac2c5e28a86c05218d7566ec26c450f17c04368c81e32b34a2a13
+    keywords:
+    - VEriK
+    - Monitoring
+    - Health check
+    - Services
+    name: uptime-bot
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/uptime-bot-1.1.7/uptime-bot-1.1.7.tgz
+    version: 1.1.7
   - annotations:
       category: Monitoring
     apiVersion: v2
@@ -26,6 +170,29 @@ entries:
     - https://github.com/verik-systems/charts/releases/download/uptime-bot-1.1.5/uptime-bot-1.1.5.tgz
     version: 1.1.5
   verik-service:
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-02-21T07:23:03.060374014Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init VEriK services
+    digest: d2904c563b7b85e10ce55c4e0ed27ea64045706c49ff00b49bc7b8f16a5ddb85
+    keywords:
+    - VEriK
+    - Application
+    - Services
+    name: verik-service
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/verik-service-1.5.8/verik-service-1.5.8.tgz
+    version: 1.5.8
   - annotations:
       category: Application
     apiVersion: v2
@@ -233,4 +400,4 @@ entries:
     urls:
     - https://github.com/verik-systems/charts/releases/download/verik-service-1.4.5/verik-service-1.4.5.tgz
     version: 1.4.5
-generated: "2022-02-21T05:31:57.280127008Z"
+generated: "2022-02-21T07:23:03.060425715Z"
