@@ -62,12 +62,9 @@ The command removes all the Kubernetes components associated with the chart and 
 | `image.repository`        | image repository                            | `busybox`                 |
 | `image.tag`               | image tag                                   | `stable`                  |
 | `replicas`                | Number of Metrics Server replicas to deploy | `2`                       |
-| `defaultEnvVars[0].name`  | default environments name                   | `GET_HOSTS_FROM`          |
-| `defaultEnvVars[0].value` | default environments value                  | `dns`                     |
-| `extraEnvVars[0].name`    | Extra environments name                     | `GET_HOSTS_FROM`          |
-| `extraEnvVars[0].value`   | Extra environments value                    | `dns`                     |
-| `inputEnvVars[0].name`    | input environments name                     | `GET_HOSTS_FROM`          |
-| `inputEnvVars[0].value`   | input environments value                    | `dns`                     |
+| `defaultEnvVars`          | default environments                        | `[]`                      |
+| `extraEnvVars`            | Extra environments                          | `[]`                      |
+| `inputEnvVars`            | input environments                          | `[]`                      |
 | `migration.enabled`       | migration script enabled                    | `false`                   |
 | `migration.skip`          | migration script skip                       | `true`                    |
 | `migration.migrationArgs` | command arg for migration script            | `["./migration"]`         |

@@ -52,22 +52,12 @@ image:
 replicas: 2
 
 
-## @param defaultEnvVars[0].name default environments name
-## @param defaultEnvVars[0].value default environments value
-defaultEnvVars: 
-  - name: GET_HOSTS_FROM
-    value: dns
-
-## @param extraEnvVars[0].name Extra environments name
-## @param extraEnvVars[0].value Extra environments value
-extraEnvVars: 
-  - name: GET_HOSTS_FROM
-    value: dns
-## @param inputEnvVars[0].name input environments name
-## @param inputEnvVars[0].value input environments value
-inputEnvVars: 
-  - name: GET_HOSTS_FROM
-    value: dns
+## @param defaultEnvVars default environments 
+defaultEnvVars: []
+## @param extraEnvVars Extra environments 
+extraEnvVars: []
+## @param inputEnvVars input environments 
+inputEnvVars: []
 
 ## @param migration.enabled migration script enabled
 ## @param migration.skip migration script skip

@@ -59,54 +59,18 @@
         },
         "defaultEnvVars": {
             "type": "array",
-            "description": "default environments name",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "default environments name"
-                    },
-                    "value": {
-                        "type": "string",
-                        "description": "default environments value"
-                    }
-                }
-            }
+            "description": "default environments ",
+            "default": []
         },
         "extraEnvVars": {
             "type": "array",
-            "description": "Extra environments name",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Extra environments name"
-                    },
-                    "value": {
-                        "type": "string",
-                        "description": "Extra environments value"
-                    }
-                }
-            }
+            "description": "Extra environments ",
+            "default": []
         },
         "inputEnvVars": {
             "type": "array",
-            "description": "input environments name",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "input environments name"
-                    },
-                    "value": {
-                        "type": "string",
-                        "description": "input environments value"
-                    }
-                }
-            }
+            "description": "input environments ",
+            "default": []
         },
         "migration": {
             "type": "object",
