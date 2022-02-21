@@ -14,4 +14,4 @@ sources:
   - https://github.com/bitnami/charts
   - https://www.bitnami.com/
 type: library
-version: 1.10.4
+version: 1.10.5
