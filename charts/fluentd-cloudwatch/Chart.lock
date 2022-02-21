@@ -3,4 +3,4 @@ dependencies:
   repository: file://../common
   version: 1.10.5
 digest: sha256:3837e321738e91012044aa6203579d7820d6e777d017f0deab2c0e8e1add7e10
-generated: "2022-02-21T14:18:31.975043428+07:00"
+generated: "2022-02-21T14:19:25.123584868+07:00"
