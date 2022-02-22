@@ -86,14 +86,14 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Node configuration Parameters
 
-| Name                                          | Description                                              | Value       |
-| --------------------------------------------- | -------------------------------------------------------- | ----------- |
-| `nodeAffinityPreset.type`                     | Node affinity preset type                                | `""`        |
-| `nodeAffinityPreset.key`                      | Node affinity preset key                                 | `""`        |
-| `nodeAffinityPreset.values`                   | Node affinity preset values                              | `[]`        |
-| `affinity`                                    | Affinity for pod assignment. Evaluated as a template.    | `{}`        |
-| `nodeSelector.alpha.eksctl.io/nodegroup-name` | node group name for node selector                        | `undefined` |
-| `tolerations`                                 | Tolerations for pod assignment. Evaluated as a template. | `[]`        |
+| Name                        | Description                                              | Value |
+| --------------------------- | -------------------------------------------------------- | ----- |
+| `nodeAffinityPreset.type`   | Node affinity preset type                                | `""`  |
+| `nodeAffinityPreset.key`    | Node affinity preset key                                 | `""`  |
+| `nodeAffinityPreset.values` | Node affinity preset values                              | `[]`  |
+| `affinity`                  | Affinity for pod assignment. Evaluated as a template.    | `{}`  |
+| `nodeSelector`              | node group name for node selector                        | `{}`  |
+| `tolerations`               | Tolerations for pod assignment. Evaluated as a template. | `[]`  |
 
 
 ### Storage configuration Parameters

@@ -164,6 +164,11 @@
             "description": "Affinity for pod assignment. Evaluated as a template.",
             "default": {}
         },
+        "nodeSelector": {
+            "type": "object",
+            "description": "node group name for node selector",
+            "default": {}
+        },
         "tolerations": {
             "type": "array",
             "description": "Tolerations for pod assignment. Evaluated as a template.",

@@ -138,11 +138,11 @@ nodeAffinityPreset:
 ##
 affinity: {}
 
-## @param nodeSelector.alpha.eksctl.io/nodegroup-name node group name for node selector
+## @param nodeSelector node group name for node selector
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
-nodeSelector: 
-  alpha.eksctl.io/nodegroup-name: "please_update"
+nodeSelector: {}
+  # alpha.eksctl.io/nodegroup-name: "please_update"
 
 ## @param tolerations Tolerations for pod assignment. Evaluated as a template.
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
