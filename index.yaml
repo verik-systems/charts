@@ -49,6 +49,28 @@ entries:
     urls:
     - https://github.com/verik-systems/charts/releases/download/cluster-reader-1.0.3/cluster-reader-1.0.3.tgz
     version: 1.0.3
+  common:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 1.10.0
+    created: "2022-02-24T08:17:51.009943738Z"
+    description: A Library Helm Chart for grouping common logic between charts. This
+      chart is not deployable by itself.
+    digest: 139fc35900d1668d2d05df2501992773f296704f98cb7615f93b3ba848221c95
+    keywords:
+    - common
+    - helper
+    - template
+    - function
+    name: common
+    sources:
+    - https://github.com/bitnami/charts
+    - https://www.bitnami.com/
+    type: library
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/common-1.10.6/common-1.10.6.tgz
+    version: 1.10.6
   fluentd-cloudwatch:
   - annotations:
       category: Logging
@@ -423,4 +445,4 @@ entries:
     urls:
     - https://github.com/verik-systems/charts/releases/download/verik-service-1.4.5/verik-service-1.4.5.tgz
     version: 1.4.5
-generated: "2022-02-22T04:16:41.093195344Z"
+generated: "2022-02-24T08:17:51.009987939Z"
