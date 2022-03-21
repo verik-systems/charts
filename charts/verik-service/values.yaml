@@ -77,7 +77,11 @@ configurations: []
 ## @param podAnnotations Additional pod annotations for MariaDB Galera pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##
-podAnnotations: {}
+podAnnotations: 
+  sidecar.istio.io/proxyRequestsCPU: "10m"
+  sidecar.istio.io/proxyRequestsMemory: "64Mi"
+  sidecar.istio.io/proxyLimitsCPU: "300m"
+  sidecar.istio.io/proxyLimitsMemory: "1Gi"
 
 ## @param priorityClassName Priority class for pod scheduling
 ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
