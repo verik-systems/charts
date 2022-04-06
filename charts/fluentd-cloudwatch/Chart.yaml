@@ -1,7 +1,7 @@
 annotations:
   category: Logging
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: v1.7.3-debian-cloudwatch-1.0
 dependencies:
   - name: common
     repository: file://../common
@@ -15,4 +15,4 @@ keywords:
   - fluentd
 name: fluentd-cloudwatch
 sources: ['https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html']
-version: 1.0.4
+version: 1.0.5
