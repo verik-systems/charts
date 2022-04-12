@@ -75,6 +75,29 @@ entries:
   - annotations:
       category: Logging
     apiVersion: v2
+    appVersion: v1.7.3-debian-cloudwatch-1.0
+    created: "2022-04-12T10:54:23.307692009Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure send logs to CloudWatch Logs
+    digest: 5a96f2f129069be141cf7160f751924bfd92dbc2bfc4e4be49dbe04428fad789
+    keywords:
+    - CloudWatch
+    - logging
+    - fluentd
+    name: fluentd-cloudwatch
+    sources:
+    - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/fluentd-cloudwatch-1.0.6/fluentd-cloudwatch-1.0.6.tgz
+    version: 1.0.6
+  - annotations:
+      category: Logging
+    apiVersion: v2
     appVersion: 1.0.0
     created: "2022-02-21T07:23:02.398054369Z"
     dependencies:
@@ -240,6 +263,29 @@ entries:
     - https://github.com/verik-systems/charts/releases/download/uptime-bot-1.1.5/uptime-bot-1.1.5.tgz
     version: 1.1.5
   verik-service:
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-04-12T10:54:23.505461561Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init VEriK services
+    digest: 91401f4bebfda65eb5478582be6d3d75d075102cc2f8f84bd69c118a5603d937
+    keywords:
+    - VEriK
+    - Application
+    - Services
+    name: verik-service
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/verik-service-1.5.13/verik-service-1.5.13.tgz
+    version: 1.5.13
   - annotations:
       category: Application
     apiVersion: v2
@@ -516,4 +562,4 @@ entries:
     urls:
     - https://github.com/verik-systems/charts/releases/download/verik-service-1.4.5/verik-service-1.4.5.tgz
     version: 1.4.5
-generated: "2022-03-21T06:42:35.942945234Z"
+generated: "2022-04-12T10:54:23.505644969Z"
