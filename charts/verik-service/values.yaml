@@ -74,9 +74,12 @@ configurations: []
 ## @section Pod configuration Parameters
 ##
 
-## @param podAnnotations Additional pod annotations for MariaDB Galera pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##
+## @param podAnnotations.sidecar.istio.io/proxyRequestsCPU istio sidecar container resource definition
+## @param podAnnotations.sidecar.istio.io/proxyRequestsMemory istio sidecar container resource definition
+## @param podAnnotations.sidecar.istio.io/proxyLimitsCPU istio sidecar container resource definition
+## @param podAnnotations.sidecar.istio.io/proxyLimitsMemory istio sidecar container resource definition
 podAnnotations: 
   sidecar.istio.io/proxyRequestsCPU: "10m"
   sidecar.istio.io/proxyRequestsMemory: "64Mi"
@@ -252,7 +255,7 @@ ingress:
   port: 80
 
   ## Hostnames.
-  ## Must be provided if Ingress is enable.
+  ## Must be provided if Ingress is enable.istio
   ##
   hosts:
     - app.veriksystems.com
@@ -377,11 +380,11 @@ autoscaling:
   policy:
     queueURL: "SQS queue name" 
     queueLength: "5"
-    awsRegion: "eu-west-1"
-    minReplicas: 1
-    maxReplicas: 10
-    targetCPU: 40
-    targetMemory: 80
+    awsRegion: "us-east-1"
+    minReplicas: '1'
+    maxReplicas: '10'
+    targetCPU: '40'
+    targetMemory: '80'
 
 ##
 ## @section Security Context Parameters

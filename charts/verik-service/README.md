@@ -73,15 +73,18 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Pod configuration Parameters
 
-| Name                                 | Description                                        | Value                     |
-| ------------------------------------ | -------------------------------------------------- | ------------------------- |
-| `podAnnotations`                     | Additional pod annotations for MariaDB Galera pods | `{}`                      |
-| `priorityClassName`                  | Priority class for pod scheduling                  | `system-cluster-critical` |
-| `podAffinityPreset`                  | Pod affinity preset                                | `""`                      |
-| `podAntiAffinityPreset`              | Pod anti-affinity preset                           | `soft`                    |
-| `podDisruptionBudget.enabled`        | Pod disruption budget enabled                      | `false`                   |
-| `podDisruptionBudget.minAvailable`   | Pod disruption budget min available pod            | `1`                       |
-| `podDisruptionBudget.maxUnavailable` | Pod disruption budget max unavailable pod          | `3`                       |
+| Name                                                  | Description                                 | Value                     |
+| ----------------------------------------------------- | ------------------------------------------- | ------------------------- |
+| `podAnnotations.sidecar.istio.io/proxyRequestsCPU`    | istio sidecar container resource definition | `undefined`               |
+| `podAnnotations.sidecar.istio.io/proxyRequestsMemory` | istio sidecar container resource definition | `undefined`               |
+| `podAnnotations.sidecar.istio.io/proxyLimitsCPU`      | istio sidecar container resource definition | `undefined`               |
+| `podAnnotations.sidecar.istio.io/proxyLimitsMemory`   | istio sidecar container resource definition | `undefined`               |
+| `priorityClassName`                                   | Priority class for pod scheduling           | `system-cluster-critical` |
+| `podAffinityPreset`                                   | Pod affinity preset                         | `""`                      |
+| `podAntiAffinityPreset`                               | Pod anti-affinity preset                    | `soft`                    |
+| `podDisruptionBudget.enabled`                         | Pod disruption budget enabled               | `false`                   |
+| `podDisruptionBudget.minAvailable`                    | Pod disruption budget min available pod     | `1`                       |
+| `podDisruptionBudget.maxUnavailable`                  | Pod disruption budget max unavailable pod   | `3`                       |
 
 
 ### Node configuration Parameters
@@ -186,7 +189,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `autoscaling.mode`                  | resource|queue. autoscaling by resource(cpu, memory) or queue length.                                                                                                                                                                                                                                                                                                                                                                             | `resource`                                 |
 | `autoscaling.policy.queueURL`       | queueURL - Full URL for the SQS Queue.                                                                                                                                                                                                                                                                                                                                                                                                            | `SQS queue name`                           |
 | `autoscaling.policy.queueLength`    | - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of autoscaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing. | `5`                                        |
-| `autoscaling.policy.awsRegion`      | - AWS Region for the SQS Queue.                                                                                                                                                                                                                                                                                                                                                                                                                   | `eu-west-1`                                |
+| `autoscaling.policy.awsRegion`      | - AWS Region for the SQS Queue.                                                                                                                                                                                                                                                                                                                                                                                                                   | `us-east-1`                                |
 | `autoscaling.policy.minReplicas`    | - min relpicas                                                                                                                                                                                                                                                                                                                                                                                                                                    | `1`                                        |
 | `autoscaling.policy.maxReplicas`    | - max relpicas                                                                                                                                                                                                                                                                                                                                                                                                                                    | `10`                                       |
 | `autoscaling.policy.targetCPU`      | - cpu percent threshold                                                                                                                                                                                                                                                                                                                                                                                                                           | `40`                                       |

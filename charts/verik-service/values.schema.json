@@ -99,11 +99,6 @@
             "description": "configmap configuration data",
             "default": []
         },
-        "podAnnotations": {
-            "type": "object",
-            "description": "Additional pod annotations for MariaDB Galera pods",
-            "default": {}
-        },
         "priorityClassName": {
             "type": "string",
             "description": "Priority class for pod scheduling",
@@ -459,27 +454,27 @@
                         "awsRegion": {
                             "type": "string",
                             "description": "- AWS Region for the SQS Queue.",
-                            "default": "eu-west-1"
+                            "default": "us-east-1"
                         },
                         "minReplicas": {
-                            "type": "number",
+                            "type": "string",
                             "description": "- min relpicas",
-                            "default": 1
+                            "default": "1"
                         },
                         "maxReplicas": {
-                            "type": "number",
+                            "type": "string",
                             "description": "- max relpicas",
-                            "default": 10
+                            "default": "10"
                         },
                         "targetCPU": {
-                            "type": "number",
+                            "type": "string",
                             "description": "- cpu percent threshold",
-                            "default": 40
+                            "default": "40"
                         },
                         "targetMemory": {
-                            "type": "number",
+                            "type": "string",
                             "description": "- Memory percent threshold",
-                            "default": 80
+                            "default": "80"
                         }
                     }
                 }
