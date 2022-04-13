@@ -1,9 +1,9 @@
 {{- if .Values.autoscaling.enabled }}
-{{- if eq .Values.autoscaling.mode "queue" }}
+{{- if eq .Values.autoscaling.mode "external" }}
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: {{ .Values.labels.app }}-trigger-auth-aws-credentials
+  name: sqs-trigger-auth-aws-credentials
   namespace: {{ .Release.Namespace }}
 spec:
   secretTargetRef:

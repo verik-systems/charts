@@ -1,5 +1,5 @@
 {{- if .Values.autoscaling.enabled }}
-{{- if eq .Values.autoscaling.mode "queue" }}
+{{- if eq .Values.autoscaling.mode "external" }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -9,10 +9,6 @@ spec:
   scaleTargetRef:
     name: {{ .Values.labels.app }}
   triggers:
-  - type: aws-sqs-queue
-    authenticationRef:
-      name: {{ .Values.labels.app }}-trigger-auth-aws-credentials
-    metadata:
-      {{- include "common.tplvalues.render" ( dict "value" .Values.autoscaling.policy "context" $ ) | nindent 8 }}
+  {{- include "common.tplvalues.render" ( dict "value" .Values.autoscaling.triggers "context" $ ) | nindent 4 }}
 {{- end }}
 {{- end }}

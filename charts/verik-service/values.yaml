@@ -376,15 +376,30 @@ autoscaling:
   enabled: true
   AWS_ACCESS_KEY_ID: "please update your aws_access_key_id" 
   AWS_SECRET_ACCESS_KEY: "please update your aws_secret_access_key"
-  mode: resource # resource | queue
+  mode: internal # internal | external
   policy:
-    queueURL: "SQS queue name" 
-    queueLength: "5"
-    awsRegion: "us-east-1"
-    minReplicas: '1'
-    maxReplicas: '10'
-    targetCPU: '40'
-    targetMemory: '80'
+    minReplicas: 1
+    maxReplicas: 10
+    targetCPU: 75
+    targetMemory: 95
+  triggers:
+  - type: cpu
+    metadata:
+      # Required
+      type: Utilization # Utilization/AverageValue
+      value: "75"
+  - type: memory
+    metadata:
+      # Required
+      type: Utilization # Utilization/AverageValue
+      value: "90"
+  - type: aws-sqs-queue
+    authenticationRef:
+      name: sqs-trigger-auth-aws-credentials
+    metadata:
+      queueURL: "SQS queue name" 
+      queueLength: "5"
+      awsRegion: "us-east-1"
 
 ##
 ## @section Security Context Parameters
