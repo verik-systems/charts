@@ -436,45 +436,77 @@
                 "mode": {
                     "type": "string",
                     "description": "resource|queue. autoscaling by resource(cpu, memory) or queue length.",
-                    "default": "resource"
+                    "default": "internal"
                 },
                 "policy": {
                     "type": "object",
                     "properties": {
-                        "queueURL": {
-                            "type": "string",
-                            "description": "queueURL - Full URL for the SQS Queue.",
-                            "default": "SQS queue name"
-                        },
-                        "queueLength": {
-                            "type": "string",
-                            "description": "- Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of autoscaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.",
-                            "default": "5"
-                        },
-                        "awsRegion": {
-                            "type": "string",
-                            "description": "- AWS Region for the SQS Queue.",
-                            "default": "us-east-1"
-                        },
                         "minReplicas": {
-                            "type": "string",
+                            "type": "number",
                             "description": "- min relpicas",
-                            "default": "1"
+                            "default": 1
                         },
                         "maxReplicas": {
-                            "type": "string",
+                            "type": "number",
                             "description": "- max relpicas",
-                            "default": "10"
+                            "default": 10
                         },
                         "targetCPU": {
-                            "type": "string",
+                            "type": "number",
                             "description": "- cpu percent threshold",
-                            "default": "40"
+                            "default": 75
                         },
                         "targetMemory": {
-                            "type": "string",
+                            "type": "number",
                             "description": "- Memory percent threshold",
-                            "default": "80"
+                            "default": 95
+                        }
+                    }
+                },
+                "triggers": {
+                    "type": "array",
+                    "description": "cpu trigger type",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "aws-sqs-queue trigger type"
+                            },
+                            "metadata": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "description": "memory Utilization/AverageValue"
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "description": "memory value percent"
+                                    },
+                                    "queueURL": {
+                                        "type": "string",
+                                        "description": "- Full URL for the SQS Queue."
+                                    },
+                                    "queueLength": {
+                                        "type": "string",
+                                        "description": "- Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of autoscaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing."
+                                    },
+                                    "awsRegion": {
+                                        "type": "string",
+                                        "description": "- AWS Region for the SQS Queue."
+                                    }
+                                }
+                            },
+                            "authenticationRef": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "name of authentication reference object"
+                                    }
+                                }
+                            }
                         }
                     }
                 }

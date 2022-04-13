@@ -365,13 +365,23 @@ healthz:
 ## @param autoscaling.AWS_ACCESS_KEY_ID aws_access_key_id
 ## @param autoscaling.AWS_SECRET_ACCESS_KEY aws_secret_access_key
 ## @param autoscaling.mode resource|queue. autoscaling by resource(cpu, memory) or queue length.
-## @param autoscaling.policy.queueURL queueURL - Full URL for the SQS Queue.
-## @param autoscaling.policy.queueLength - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of autoscaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.
-## @param autoscaling.policy.awsRegion - AWS Region for the SQS Queue.
 ## @param autoscaling.policy.minReplicas - min relpicas
 ## @param autoscaling.policy.maxReplicas - max relpicas
 ## @param autoscaling.policy.targetCPU - cpu percent threshold
 ## @param autoscaling.policy.targetMemory - Memory percent threshold
+
+## @param autoscaling.triggers[0].type cpu trigger type
+## @param autoscaling.triggers[0].metadata.type cpu Utilization/AverageValue
+## @param autoscaling.triggers[0].metadata.value cpu value percent
+## @param autoscaling.triggers[1].type memory trigger type
+## @param autoscaling.triggers[1].metadata.type memory Utilization/AverageValue
+## @param autoscaling.triggers[1].metadata.value memory value percent
+## @param autoscaling.triggers[2].type aws-sqs-queue trigger type
+## @param autoscaling.triggers[2].authenticationRef.name name of authentication reference object
+## @param autoscaling.triggers[2].metadata.queueURL - Full URL for the SQS Queue.
+## @param autoscaling.triggers[2].metadata.queueLength - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5). For the purposes of autoscaling, “actual messages” is equal to ApproximateNumberOfMessages + ApproximateNumberOfMessagesNotVislble, since NotVisible in SQS terms means the message is still in-flight/processing.
+## @param autoscaling.triggers[2].metadata.awsRegion - AWS Region for the SQS Queue.
+
 autoscaling:
   enabled: true
   AWS_ACCESS_KEY_ID: "please update your aws_access_key_id" 
@@ -392,7 +402,7 @@ autoscaling:
     metadata:
       # Required
       type: Utilization # Utilization/AverageValue
-      value: "90"
+      value: "95"
   - type: aws-sqs-queue
     authenticationRef:
       name: sqs-trigger-auth-aws-credentials
