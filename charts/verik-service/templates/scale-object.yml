@@ -8,6 +8,8 @@ metadata:
 spec:
   scaleTargetRef:
     name: {{ .Values.labels.app }}
+    minReplicaCount: {{ .Values.autoscaling.policy.minReplicas }}
+    maxReplicaCount: {{ .Values.autoscaling.policy.maxReplicas }}
   triggers:
   {{- include "common.tplvalues.render" ( dict "value" .Values.autoscaling.triggers "context" $ ) | nindent 4 }}
 {{- end }}
