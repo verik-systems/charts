@@ -31,8 +31,8 @@ nameOverride: "" # <please update>
 image:
   pullPolicy: IfNotPresent
   registry: "registry.hub.docker.com" 
-  repository: "busybox" 
-  tag: "stable" 
+  repository: "scratch" 
+  tag: "" 
   # repository: "" # <please update>
   # tag: "" # <please update>
   ## Optionally specify an array of imagePullSecrets.
