@@ -8,10 +8,10 @@ metadata:
 spec:
   scaleTargetRef:
     name: {{ .Values.labels.app }}
-    pollingInterval: {{ .Values.autoscaling.policy.pollingInterval }}
-    cooldownPeriod:  {{ .Values.autoscaling.policy.cooldownPeriod }}
-    minReplicaCount: {{ .Values.autoscaling.policy.minReplicas }}
-    maxReplicaCount: {{ .Values.autoscaling.policy.maxReplicas }}
+  pollingInterval: {{ .Values.autoscaling.policy.pollingInterval }}
+  cooldownPeriod:  {{ .Values.autoscaling.policy.cooldownPeriod }}
+  minReplicaCount: {{ .Values.autoscaling.policy.minReplicas }}
+  maxReplicaCount: {{ .Values.autoscaling.policy.maxReplicas }}
   triggers:
   {{- include "common.tplvalues.render" ( dict "value" .Values.autoscaling.triggers "context" $ ) | nindent 4 }}
 {{- end }}
