@@ -267,6 +267,29 @@ entries:
       category: Application
     apiVersion: v2
     appVersion: 1.0.0
+    created: "2022-04-26T06:28:44.384214116Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init VEriK services
+    digest: 035a781f206a2fd958f3ae1809a133e8a3d6ad7625b2b6e5612eed2c0a7b3c3e
+    keywords:
+    - VEriK
+    - Application
+    - Services
+    name: verik-service
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/verik-service-1.5.19/verik-service-1.5.19.tgz
+    version: 1.5.19
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.0
     created: "2022-04-24T15:59:25.823441631Z"
     dependencies:
     - name: common
@@ -677,4 +700,4 @@ entries:
     urls:
     - https://github.com/verik-systems/charts/releases/download/verik-service-1.4.5/verik-service-1.4.5.tgz
     version: 1.4.5
-generated: "2022-04-24T15:59:25.823769045Z"
+generated: "2022-04-26T06:28:44.384366817Z"
