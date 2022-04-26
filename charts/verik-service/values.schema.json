@@ -451,6 +451,16 @@
                             "description": "- max relpicas",
                             "default": 10
                         },
+                        "pollingInterval": {
+                            "type": "number",
+                            "description": "- This is the interval to check each trigger on. By default KEDA will check each trigger source on every ScaledObject every 30 seconds.",
+                            "default": 30
+                        },
+                        "cooldownPeriod": {
+                            "type": "number",
+                            "description": "- The period to wait after the last trigger reported active before scaling the deployment back to 0. By default it’s 5 minutes (300 seconds).",
+                            "default": 300
+                        },
                         "targetCPU": {
                             "type": "number",
                             "description": "- cpu percent threshold",

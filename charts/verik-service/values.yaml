@@ -367,6 +367,8 @@ healthz:
 ## @param autoscaling.mode resource|queue. autoscaling by resource(cpu, memory) or queue length.
 ## @param autoscaling.policy.minReplicas - min relpicas
 ## @param autoscaling.policy.maxReplicas - max relpicas
+## @param autoscaling.policy.pollingInterval - This is the interval to check each trigger on. By default KEDA will check each trigger source on every ScaledObject every 30 seconds.
+## @param autoscaling.policy.cooldownPeriod - The period to wait after the last trigger reported active before scaling the deployment back to 0. By default it’s 5 minutes (300 seconds).
 ## @param autoscaling.policy.targetCPU - cpu percent threshold
 ## @param autoscaling.policy.targetMemory - Memory percent threshold
 
@@ -390,6 +392,8 @@ autoscaling:
   policy:
     minReplicas: 1
     maxReplicas: 10
+    pollingInterval: 30  # Optional. Default: 30 seconds
+    cooldownPeriod:  300 # Optional. Default: 300 seconds
     targetCPU: 75
     targetMemory: 95
   triggers:

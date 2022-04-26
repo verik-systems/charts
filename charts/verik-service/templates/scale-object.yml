@@ -8,6 +8,8 @@ metadata:
 spec:
   scaleTargetRef:
     name: {{ .Values.labels.app }}
+    pollingInterval: {{ .Values.autoscaling.policy.pollingInterval }}
+    cooldownPeriod:  {{ .Values.autoscaling.policy.cooldownPeriod }}
     minReplicaCount: {{ .Values.autoscaling.policy.minReplicas }}
     maxReplicaCount: {{ .Values.autoscaling.policy.maxReplicas }}
   triggers:
