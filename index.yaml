@@ -170,6 +170,30 @@ entries:
       category: Monitoring
     apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-06-19T04:21:06.832232999Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for health check VEriK services
+    digest: 57bca03224d6bda56ddc7023b8b1a3f3549f720e46555a6a819781fd988bc125
+    keywords:
+    - VEriK
+    - Monitoring
+    - Health check
+    - Services
+    name: uptime-bot
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/uptime-bot-1.1.11/uptime-bot-1.1.11.tgz
+    version: 1.1.11
+  - annotations:
+      category: Monitoring
+    apiVersion: v2
+    appVersion: 1.0.0
     created: "2022-03-21T03:25:22.34012277Z"
     dependencies:
     - name: common
@@ -263,6 +287,29 @@ entries:
     - https://github.com/verik-systems/charts/releases/download/uptime-bot-1.1.5/uptime-bot-1.1.5.tgz
     version: 1.1.5
   verik-service:
+  - annotations:
+      category: Application
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-06-19T04:21:06.972969195Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart to init VEriK services
+    digest: f5ae3e626fc00288fa8f39096500a7b8913af19e57b0470eb8b1c85d09f29b2d
+    keywords:
+    - VEriK
+    - Application
+    - Services
+    name: verik-service
+    sources:
+    - https://veriksystems.com
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/verik-service-1.5.20/verik-service-1.5.20.tgz
+    version: 1.5.20
   - annotations:
       category: Application
     apiVersion: v2
@@ -700,4 +747,4 @@ entries:
     urls:
     - https://github.com/verik-systems/charts/releases/download/verik-service-1.4.5/verik-service-1.4.5.tgz
     version: 1.4.5
-generated: "2022-04-26T06:28:44.384366817Z"
+generated: "2023-06-19T04:21:06.973146996Z"
