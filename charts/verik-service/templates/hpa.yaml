@@ -25,13 +25,17 @@ spec:
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: {{ .Values.autoscaling.policy.targetCPU }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.policy.targetCPU }}
     {{- end }}
     {{- if .Values.autoscaling.policy.targetMemory }}
     - type: Resource
       resource:
         name: memory
-        targetAverageUtilization: {{ .Values.autoscaling.policy.targetMemory  }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.policy.targetMemory }}
     {{- end }}
 {{- end }}
 {{- end }}
