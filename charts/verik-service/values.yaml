@@ -264,6 +264,8 @@ ingress:
   path: /
   pathType: Prefix
 
+  className: ""
+
   ## TLS configuration for VEriK Service Ingress
   ## Secret must be manually created in the namespace
   ##
