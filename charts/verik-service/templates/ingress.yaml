@@ -50,5 +50,17 @@ spec:
                 port:
                   number: {{ $port }}
   {{- end -}}
+  {{- else }}
+    - http:
+        paths:
+          - path: {{ $path }}
+            {{- if $pathType }}
+            pathType: {{ $pathType }}
+            {{- end }}
+            backend:
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ $port }}
   {{- end -}}
 {{- end -}}
