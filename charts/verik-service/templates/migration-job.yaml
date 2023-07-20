@@ -22,9 +22,14 @@ spec:
         # https://github.com/istio/istio/issues/11659
         sidecar.istio.io/inject: "false"
     spec:
+      {{- if .Values.image.credentials }}
+      imagePullSecrets: 
+      - name: {{ .Values.image.secretName | quote }}
+      {{- end }}
       containers:
         - name: {{ .Values.labels.app }}-migration
           image: {{ template "application.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           command: ["/bin/sh","-c"]
           {{- if .Values.migration.skip }}
           args: ['echo "This migration job has been skipped!"']
