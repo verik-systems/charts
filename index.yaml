@@ -75,6 +75,29 @@ entries:
   - annotations:
       category: Logging
     apiVersion: v2
+    appVersion: v1.16.3-debian-cloudwatch-amd64-2.1
+    created: "2024-03-24T14:05:22.386741133Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      tags:
+      - common
+      version: 1.x.x
+    description: Chart for configure send logs to CloudWatch Logs
+    digest: cc41bd611d2923d581da029d6b4619b74a61220deb032559b74efd6f52ae127c
+    keywords:
+    - CloudWatch
+    - logging
+    - fluentd
+    name: fluentd-cloudwatch
+    sources:
+    - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html
+    urls:
+    - https://github.com/verik-systems/charts/releases/download/fluentd-cloudwatch-1.1.0/fluentd-cloudwatch-1.1.0.tgz
+    version: 1.1.0
+  - annotations:
+      category: Logging
+    apiVersion: v2
     appVersion: v1.7.3-debian-cloudwatch-1.0
     created: "2022-04-12T10:54:23.307692009Z"
     dependencies:
@@ -863,4 +886,4 @@ entries:
     urls:
     - https://github.com/verik-systems/charts/releases/download/verik-service-1.4.5/verik-service-1.4.5.tgz
     version: 1.4.5
-generated: "2023-07-20T07:33:16.936173499Z"
+generated: "2024-03-24T14:05:22.386900188Z"
